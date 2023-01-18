@@ -70,10 +70,6 @@ jobs:
     if: "startsWith(github.ref, 'refs/tags/')"
     needs: [ macos, windows, linux ]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          submodules: recursive
       - uses: actions/download-artifact@v3
         with:
           name: wheels
