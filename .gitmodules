@@ -1,0 +1,3 @@
+[submodule "imagetext"]
+	path = imagetext
+	url = https://github.com/nathanielfernandes/imagetext
