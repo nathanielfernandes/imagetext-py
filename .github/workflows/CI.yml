@@ -12,6 +12,10 @@ jobs:
   linux:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
     - uses: actions/checkout@v3
     - uses: PyO3/maturin-action@v1
       with:
@@ -27,6 +31,10 @@ jobs:
   windows:
     runs-on: windows-latest
     steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
     - uses: actions/checkout@v3
     - uses: PyO3/maturin-action@v1
       with:
@@ -41,6 +49,10 @@ jobs:
   macos:
     runs-on: macos-latest
     steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
     - uses: actions/checkout@v3
     - uses: PyO3/maturin-action@v1
       with:
@@ -58,6 +70,10 @@ jobs:
     if: "startsWith(github.ref, 'refs/tags/')"
     needs: [ macos, windows, linux ]
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
       - uses: actions/download-artifact@v3
         with:
           name: wheels
