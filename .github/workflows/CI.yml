@@ -12,9 +12,9 @@ jobs:
   linux:
     runs-on: ubuntu-latest
     steps:
-    - name: Git Submodules Init
-      uses: chris-short/github-action-git-submodules@v0.1.0
     - uses: actions/checkout@v3
+      with:
+        submodules: recursive
     - uses: PyO3/maturin-action@v1
       with:
         manylinux: auto
@@ -29,9 +29,9 @@ jobs:
   windows:
     runs-on: windows-latest
     steps:
-    - name: Git Submodules Init
-      uses: chris-short/github-action-git-submodules@v0.1.0
     - uses: actions/checkout@v3
+      with:
+        submodules: recursive
     - uses: PyO3/maturin-action@v1
       with:
         command: build
@@ -45,8 +45,9 @@ jobs:
   macos:
     runs-on: macos-latest
     steps:
-    - name: Git Submodules Init
-      uses: chris-short/github-action-git-submodules@v0.1.0
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
     - uses: actions/checkout@v3
     - uses: PyO3/maturin-action@v1
       with:
