@@ -1,14 +1,29 @@
-use pyo3::prelude::*;
+pub mod canvas;
+pub mod drawing;
+pub mod font;
+pub mod objects;
+pub mod paint;
+pub mod utils;
 
-/// Formats the sum of two numbers as string.
-#[pyfunction]
-fn sum_as_string(a: usize, b: usize) -> PyResult<String> {
-    Ok((a + b).to_string())
-}
+use pyo3::prelude::*;
 
 /// A Python module implemented in Rust.
 #[pymodule]
 fn typerighter(_py: Python, m: &PyModule) -> PyResult<()> {
-    m.add_function(wrap_pyfunction!(sum_as_string, m)?)?;
+    m.add_class::<canvas::Canvas>()?;
+    m.add_class::<font::Font>()?;
+    m.add_class::<paint::Paint>()?;
+    m.add_class::<objects::TextAlign>()?;
+
+    m.add_function(wrap_pyfunction!(drawing::draw_text, m)?)?;
+    m.add_function(wrap_pyfunction!(drawing::draw_text_anchored, m)?)?;
+    m.add_function(wrap_pyfunction!(drawing::draw_text_multiline, m)?)?;
+    m.add_function(wrap_pyfunction!(drawing::draw_text_wrapped, m)?)?;
+
+    m.add_function(wrap_pyfunction!(utils::text_size, m)?)?;
+    m.add_function(wrap_pyfunction!(utils::text_size_multiline, m)?)?;
+    m.add_function(wrap_pyfunction!(utils::split_on_space, m)?)?;
+    m.add_function(wrap_pyfunction!(utils::word_wrap, m)?)?;
+
     Ok(())
 }
