@@ -22,7 +22,6 @@ fn imagetext_py(_py: Python, m: &PyModule) -> PyResult<()> {
 
     m.add_function(wrap_pyfunction!(utils::text_size, m)?)?;
     m.add_function(wrap_pyfunction!(utils::text_size_multiline, m)?)?;
-    m.add_function(wrap_pyfunction!(utils::split_on_space, m)?)?;
     m.add_function(wrap_pyfunction!(utils::word_wrap, m)?)?;
 
     Ok(())

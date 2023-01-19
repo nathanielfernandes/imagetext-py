@@ -61,13 +61,13 @@ class Paint:
             color (Color): The color.
         """
 
-    def set_antialias(self, antialias: bool) -> None: 
-        """Set the antialias of the paint.
+    def set_anti_alias(self, anti_alias: bool) -> None: 
+        """Set the anti_alias of the paint.
         
         default: True
 
         Args:
-            antialias (bool): Whether to antialias.
+            anti_alias (bool): Whether to antialias.
         """
 
     @staticmethod
@@ -269,7 +269,7 @@ def text_size(
     """
 
 def text_size_multiline(
-    text: str,
+    lines: list[str],
     size: float,
     font: Font,
     line_spacing: float=1.0,
@@ -277,7 +277,7 @@ def text_size_multiline(
     """Get the size of a text in pixels.
 
     Args:
-        text (str): The text.
+        lines (list[str]): The lines of text.
         size (float): The size of the text.
         font (Font): The font of the text.
         line_spacing (float, optional): The line spacing. Defaults to 1.0.

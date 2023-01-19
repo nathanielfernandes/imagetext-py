@@ -1,17 +1,17 @@
 use crate::objects::Color;
 
-use imagetext::drawing::prelude::*;
+use imagetext::prelude::*;
 use pyo3::prelude::*;
 
 #[pyclass]
-pub struct Paint(pub imagetext::drawing::prelude::Paint<'static>);
+pub struct Paint(pub imagetext::prelude::Paint<'static>);
 
 #[allow(non_snake_case)]
 #[pymethods]
 impl Paint {
     #[new]
     fn new(color: Option<Color>, anti_alias: Option<bool>) -> Self {
-        let mut paint = imagetext::drawing::prelude::Paint::default();
+        let mut paint = imagetext::prelude::Paint::default();
 
         if let Some(color) = color {
             paint.set_color_rgba8(color.0[0], color.0[1], color.0[2], color.0[3]);

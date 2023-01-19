@@ -5,7 +5,7 @@ use crate::font::Font;
 use crate::objects::TextAlign;
 use crate::paint::Paint;
 
-use imagetext::drawing::prelude::*;
+use imagetext::prelude::*;
 
 #[pyfunction]
 pub fn draw_text(

@@ -1,10 +1,10 @@
-use imagetext::drawing::prelude::*;
+use imagetext::prelude::*;
 use pyo3::prelude::*;
 
 #[pyclass]
 pub struct Font {
-    pub font: imagetext::drawing::prelude::Font<'static>,
-    pub fallbacks: Vec<imagetext::drawing::prelude::Font<'static>>,
+    pub font: imagetext::prelude::Font<'static>,
+    pub fallbacks: Vec<imagetext::prelude::Font<'static>>,
 }
 
 #[pymethods]
