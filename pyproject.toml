@@ -4,6 +4,12 @@ build-backend = "maturin"
 
 [project]
 name = "imagetext_py"
+description = "Python bindings for imagetext"
+version = "1.0.0"
+authors = [
+    { name = "Nathaniel Fernande", email = "nathaniel.s.fernandes@gmail.com" },
+]
+readme = "readme.md"
 requires-python = ">=3.7"
 classifiers = [
     "Programming Language :: Rust",
@@ -11,4 +17,5 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
 
-
+[project.urls]
+Repository = "https://github.com/nathanielfernandes/imagetext-py"
