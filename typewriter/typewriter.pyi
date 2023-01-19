@@ -1,4 +1,4 @@
-from typerighter.lib import *
+from typewriter.lib import *
 
 from enum import Enum
 

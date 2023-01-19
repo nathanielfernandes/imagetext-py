@@ -1,0 +1,1 @@
+from typerighter import *
