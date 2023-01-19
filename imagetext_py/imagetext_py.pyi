@@ -1,4 +1,4 @@
-from typewriter.lib import *
+from imagetext_py.lib import *
 
 from enum import Enum
 
