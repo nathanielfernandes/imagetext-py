@@ -27,6 +27,25 @@ impl Canvas {
         Python::with_gil(|py| Ok(((width, height), PyBytes::new(py, &self.im).into())))
     }
 
+    fn to_buffer(&self) -> PyResult<Vec<u8>> {
+        Ok(self.im.to_vec())
+    }
+
+    #[staticmethod]
+    fn from_image(mut image: &PyAny) -> PyResult<Self> {
+        let mode: &str = image.getattr("mode")?.extract()?;
+        let width: u32 = image.getattr("width")?.extract()?;
+        let height: u32 = image.getattr("height")?.extract()?;
+        if mode != "RGBA" {
+            image = image.call_method1("convert", ("RGBA",))?;
+        }
+        let buffer: Vec<u8> = image.call_method0("tobytes")?.extract()?;
+
+        Ok(Canvas {
+            im: image::RgbaImage::from_raw(width, height, buffer).unwrap(),
+        })
+    }
+
     fn to_image(&self) -> PyResult<PyObject> {
         let ((width, height), data) = self.to_bytes()?;
         Python::with_gil(|py| {

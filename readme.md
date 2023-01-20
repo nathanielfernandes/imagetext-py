@@ -72,3 +72,36 @@ produces this image:
 ![test.png](https://cdn.discordapp.com/attachments/749779629643923548/1065477410281246791/image.png)
 
 ##### took `6ms` to draw this on my machine
+
+
+
+## Pillow Usage
+```python
+from PIL import Image
+from imagetext_py import *
+
+font = Font("coolvetica.ttf", fallbacks=["emojis.ttf", "japanese.otf"])
+
+black = Paint.Color((0, 0, 0, 255))
+rainbow = Paint.Rainbow((0.0,0.0), (256.0,256.0))
+
+# images must be converted to RGBA
+im = Image.open("unknown.png").convert("RGBA")
+
+# note: drawing operations are only applied after the context manager exits
+with Writer(im) as w:
+    w.draw_text_wrapped(
+        text="hello my 😓 n🐢ame i☕s 会のすべ aての構成員 nathan and i drink soup boop coop, the quick brown fox jumps over the lazy dog",
+        x=256, y=256,
+        ax=0.5, ay=0.5,
+        width=512,
+        size=67,
+        font=font,
+        fill=black,
+        align=TextAlign.Center,
+        stroke=2.0,
+        stroke_color=rainbow
+    )
+
+im.save("test.png")
+```

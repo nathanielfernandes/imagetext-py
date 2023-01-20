@@ -41,6 +41,24 @@ class Canvas:
             The canvas as an image.
         """
 
+    def to_buffer(self) -> list[int]:
+        """Get the canvas as a buffer.
+
+        Returns:
+            list[int]: The canvas as a buffer.
+        """
+
+    @staticmethod
+    def from_image(image: "Image.Image") -> Canvas:
+        """Create a canvas from an image.
+
+        Args:
+            image (Image.Image): The image.
+
+        Returns:
+            Canvas: The canvas.
+        """
+
 
 class Paint:
     def __new__(self, color: Color=(0, 0, 0, 255), anti_alias: bool = True) -> Paint:
