@@ -5,6 +5,8 @@
   ### A blazing fast text drawing library
   ###### imagetext-py is python bindings for [imagetext](https://github.com/nathanielfernandes/imagetext)
 
+
+[![CI](https://github.com/nathanielfernandes/imagetext-py/actions/workflows/CI.yml/badge.svg?event=push)](https://github.com/nathanielfernandes/imagetext-py/actions/workflows/CI.yml)
   ---
   
 </div>

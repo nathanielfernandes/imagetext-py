@@ -11,7 +11,7 @@ authors = [
 ]
 readme = "readme.md"
 license = { file = "LICENSE" }  
-requires-python = ">=3.7"
+requires-python = ">=3.9"
 classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
