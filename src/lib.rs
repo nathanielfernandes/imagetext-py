@@ -14,6 +14,7 @@ fn imagetext_py(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_class::<font::Font>()?;
     m.add_class::<paint::Paint>()?;
     m.add_class::<objects::TextAlign>()?;
+    m.add_class::<objects::EmojiSource>()?;
 
     m.add_function(wrap_pyfunction!(drawing::draw_text, m)?)?;
     m.add_function(wrap_pyfunction!(drawing::draw_text_anchored, m)?)?;

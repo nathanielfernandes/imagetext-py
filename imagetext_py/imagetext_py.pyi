@@ -1,4 +1,4 @@
-from imagetext_py.lib import *
+from imagetext_py.lib import Color, EmojiOptions
 
 from enum import Enum
 
@@ -126,16 +126,33 @@ class Paint:
 
 
 class Font:
-    def __new__(self, path: str, fallbacks: list[str]=None) -> Font:
+    def __new__(self, path: str, fallbacks: list[str]=None, emoji_options: EmojiOptions = None) -> Font:
         """Create a new font.
 
         Args:
             path (str): The path to the font.
             fallbacks (list[str], optional): The fallback fonts. Defaults to None.
+            emoji_options (EmojiOptions, optional): The emoji options. Defaults to None.
 
         Returns:
             Font: The font.
         """
+
+class EmojiSource(Enum):
+    Twitter = 0
+    Apple = 1
+    Google = 2
+    Microsoft = 3
+    Samsung = 4
+    Whatsapp = 5
+    JoyPixels = 6
+    OpenMoji = 7
+    Emojidex = 8
+    Messenger = 9
+    Mozilla = 10
+    Lg = 11
+    Htc = 12
+    Twemoji = 13
 
 class TextAlign(Enum):
     Left = 0
@@ -153,6 +170,7 @@ def draw_text(
     fill: Paint,
     stroke: Paint=None,
     stroke_color: Paint=None,
+    draw_emojis: bool=True,
 ) -> None:
     """Draw text on a canvas.
 
@@ -166,6 +184,7 @@ def draw_text(
         fill (Paint): The fill of the text.
         stroke (Paint, optional): The stroke of the text. Defaults to None.
         stroke_color (Paint, optional): The stroke color of the text. Defaults to None.
+        draw_emojis (bool, optional): Whether to draw emojis. Defaults to True.
     """
 
 def draw_text_anchored(
@@ -180,6 +199,7 @@ def draw_text_anchored(
     fill: Paint,
     stroke: Paint=None,
     stroke_color: Paint=None,
+    draw_emojis: bool=True,
 ) -> None:
     """Draw text on a canvas.
 
@@ -195,6 +215,7 @@ def draw_text_anchored(
         fill (Paint): The fill of the text.
         stroke (Paint, optional): The stroke of the text. Defaults to None.
         stroke_color (Paint, optional): The stroke color of the text. Defaults to None.
+        draw_emojis (bool, optional): Whether to draw emojis. Defaults to True.
     """
 
 
@@ -214,6 +235,7 @@ def draw_text_multiline(
     align: TextAlign=TextAlign.Left,
     stroke: Paint=None,
     stroke_color: Paint=None,
+    draw_emojis: bool=True,
 ) -> None:
     """Draw text on a canvas.
 
@@ -232,6 +254,7 @@ def draw_text_multiline(
         align (TextAlign, optional): The text alignment. Defaults to TextAlign.Left.
         stroke (Paint, optional): The stroke of the text. Defaults to None.
         stroke_color (Paint, optional): The stroke color of the text. Defaults to None.
+        draw_emojis (bool, optional): Whether to draw emojis. Defaults to True.
     """
 
 
@@ -250,6 +273,7 @@ def draw_text_wrapped(
     align: TextAlign=TextAlign.Left,
     stroke: Paint=None,
     stroke_color: Paint=None,
+    draw_emojis: bool=True,
 ) -> None:
     """Draw text on a canvas.
 
@@ -268,12 +292,14 @@ def draw_text_wrapped(
         align (TextAlign, optional): The text alignment. Defaults to TextAlign.Left.
         stroke (Paint, optional): The stroke of the text. Defaults to None.
         stroke_color (Paint, optional): The stroke color of the text. Defaults to None.
+        draw_emojis (bool, optional): Whether to draw emojis. Defaults to True.
     """
 
 def text_size(
     text: str,
     size: float,
     font: Font,
+    draw_emojis: bool=True,
 ) -> tuple[int, int]:
     """Get the size of a text in pixels.
 
@@ -281,6 +307,7 @@ def text_size(
         text (str): The text.
         size (float): The size of the text.
         font (Font): The font of the text.
+        draw_emojis (bool, optional): Whether to draw emojis. Defaults to True.
 
     Returns:
         tuple[float, float]: The size of the text.
@@ -291,6 +318,7 @@ def text_size_multiline(
     size: float,
     font: Font,
     line_spacing: float=1.0,
+    draw_emojis: bool=True,
 ) -> tuple[int, int]:
     """Get the size of a text in pixels.
 
@@ -299,22 +327,14 @@ def text_size_multiline(
         size (float): The size of the text.
         font (Font): The font of the text.
         line_spacing (float, optional): The line spacing. Defaults to 1.0.
+        draw_emojis (bool, optional): Whether to draw emojis. Defaults to True.
 
     Returns:
         tuple[float, float]: The size of the text.
     """
 
-def split_on_space(text: str) -> list[str]:
-    """Split a string on spaces.
 
-    Args:
-        text (str): The text to split.
-
-    Returns:
-        list[str]: The split text.
-    """
-
-def word_wrap(text: str, width: float, size: float, font: Font ) -> list[str]:
+def word_wrap(text: str, width: float, size: float, font: Font, draw_emojis: bool=True) -> list[str]:
     """Wrap a text on a given pixel width.
 
     Args:
@@ -322,6 +342,7 @@ def word_wrap(text: str, width: float, size: float, font: Font ) -> list[str]:
         width (float): The width to wrap on.
         size (float): The size of the text.
         font (Font): The font of the text.
+        draw_emojis (bool, optional): Whether to draw emojis. Defaults to True.
 
     Returns:
         list[str]: The wrapped text.

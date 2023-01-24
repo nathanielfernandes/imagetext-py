@@ -1,4 +1,5 @@
 from __future__ import annotations
+from dataclasses import dataclass
 
 from imagetext_py.imagetext_py import *
 
@@ -54,6 +55,18 @@ class Color(tuple):
         """The alpha value of the color."""
         return self[3]
 
+
+
+@dataclass
+class EmojiOptions:
+    scale: float = 1.0
+    shift: tuple[int, int] = (0, 0)
+
+    allow_shortcodes: bool = True
+    allow_discord: bool = True
+    source: EmojiSource = EmojiSource.Twitter
+
+
 class Writer:
     def __init__(self, image: "Image.Image") -> None:
         """Create a new draw object.
@@ -88,6 +101,7 @@ class Writer:
         fill: Paint,
         stroke: Paint=None,
         stroke_color: Paint=None,
+        draw_emojis: bool=False,
     ) -> None:
         """Draw text on the image.
 
@@ -100,8 +114,9 @@ class Writer:
             fill (Paint): The fill paint.
             stroke (Paint, optional): The stroke paint. Defaults to None.
             stroke_color (Paint, optional): The stroke color. Defaults to None.
+            draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
         """
-        draw_text(self._canvas, text, x, y, size, font, fill, stroke, stroke_color)
+        draw_text(self._canvas, text, x, y, size, font, fill, stroke, stroke_color, draw_emojis)
 
     def draw_text_anchored(
         self,
@@ -115,6 +130,7 @@ class Writer:
         fill: Paint,
         stroke: Paint=None,
         stroke_color: Paint=None,
+        draw_emojis: bool=False,
     ) -> None:
         """Draw text on the image.
 
@@ -129,8 +145,9 @@ class Writer:
             fill (Paint): The fill paint.
             stroke (Paint, optional): The stroke paint. Defaults to None.
             stroke_color (Paint, optional): The stroke color. Defaults to None.
+            draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
         """
-        draw_text_anchored(self._canvas, text, x, y, ax, ay, size, font, fill, stroke, stroke_color)
+        draw_text_anchored(self._canvas, text, x, y, ax, ay, size, font, fill, stroke, stroke_color, draw_emojis)
 
     def draw_text_multiline(
         self,
@@ -147,6 +164,7 @@ class Writer:
         align: TextAlign=TextAlign.Left,
         stroke: Paint=None,
         stroke_color: Paint=None,
+        draw_emojis: bool=False,
     ) -> None:
         """Draw text on the image.
 
@@ -164,8 +182,9 @@ class Writer:
             align (TextAlign, optional): The text alignment. Defaults to TextAlign.Left.
             stroke (Paint, optional): The stroke paint. Defaults to None.
             stroke_color (Paint, optional): The stroke color. Defaults to None.
+            draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
         """
-        draw_text_multiline(self._canvas, text, x, y, ax, ay, width, size, font, fill, line_spacing, align, stroke, stroke_color)
+        draw_text_multiline(self._canvas, text, x, y, ax, ay, width, size, font, fill, line_spacing, align, stroke, stroke_color, draw_emojis)
 
 
     def draw_text_wrapped(
@@ -183,6 +202,7 @@ class Writer:
         align: TextAlign=TextAlign.Left,
         stroke: Paint=None,
         stroke_color: Paint=None,
+        draw_emojis: bool=False,
     ) -> None:
         """Draw text on the image.
 
@@ -200,5 +220,6 @@ class Writer:
             align (TextAlign, optional): The text alignment. Defaults to TextAlign.Left.
             stroke (Paint, optional): The stroke paint. Defaults to None.
             stroke_color (Paint, optional): The stroke color. Defaults to None.
+            draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
         """
-        draw_text_wrapped(self._canvas, text, x, y, ax, ay, width, size, font, fill, line_spacing, align, stroke, stroke_color)
+        draw_text_wrapped(self._canvas, text, x, y, ax, ay, width, size, font, fill, line_spacing, align, stroke, stroke_color, draw_emojis)
