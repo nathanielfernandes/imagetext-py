@@ -12,6 +12,7 @@ use pyo3::prelude::*;
 fn imagetext_py(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_class::<canvas::Canvas>()?;
     m.add_class::<font::Font>()?;
+    m.add_class::<font::FontDB>()?;
     m.add_class::<paint::Paint>()?;
     m.add_class::<objects::TextAlign>()?;
     m.add_class::<objects::EmojiSource>()?;

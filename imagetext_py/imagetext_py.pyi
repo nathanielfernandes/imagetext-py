@@ -132,11 +132,88 @@ class Font:
         Args:
             path (str): The path to the font.
             fallbacks (list[str], optional): The fallback fonts. Defaults to None.
-            emoji_options (EmojiOptions, optional): The emoji options. Defaults to None.
+            emoji_options (EmojiOptions, optional): The emoji options. Defaults to the default emoji options.
 
         Returns:
             Font: The font.
         """
+
+    def set_emoji_options(self, emoji_options: EmojiOptions) -> None:
+        """Set the emoji options of the font.
+
+        Args:
+            emoji_options (EmojiOptions): The emoji options.
+        """
+        
+
+class FontDB:
+    @staticmethod
+    def LoadFromPath(name: str, path: str) -> None:
+        """Load a font from a path. The font will be available by name.
+
+        Args:
+            name (str): The inputted name of the font.
+            path (str): The path to the font.
+        """
+
+    @staticmethod
+    def LoadFromDir(path: str) -> None:
+        """Recursively Load all fonts from a directory.
+
+        Args:
+            path (str): The path to the directory.
+        """
+
+    @staticmethod
+    def LoadSystemFonts() -> None:
+        """Load all system found fonts."""
+
+    @staticmethod
+    def Query(names: str) -> Font:
+        """Query a font by names. ex. 'Segoe-UI Segoe-UI-Emoji Segoe-UI-Symbol'
+        
+        A font with fallbacks and using default emoji options will be returned.
+
+        Args:
+            names (str): The name of the font.
+
+        Returns:
+            Font: The font.
+        """
+
+    @staticmethod
+    def QueryWithEmoji(names: str, emoji_options: EmojiOptions) -> Font:
+        """Query a font by names. ex. 'Segoe-UI Segoe-UI-Emoji Segoe-UI-Symbol'
+        
+        A font with fallbacks will be returned.
+
+        Args:
+            names (str): The name of the font.
+            emoji_options (EmojiOptions): The emoji options.
+
+        Returns:
+            Font: The font.
+        """
+
+
+    @staticmethod
+    def Remove(name: str) -> None:
+        """Remove a font from the database.
+
+        Args:
+            name (str): The name of the font.
+        """
+
+    @staticmethod
+    def SetDefaultEmojiOptions(emoji_options: EmojiOptions) -> None:
+        """Set the default emoji options.
+
+        Args:
+            emoji_options (EmojiOptions): The emoji options.
+        """
+    
+
+
 
 class EmojiSource(Enum):
     Twitter = 0

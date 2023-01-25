@@ -5,7 +5,7 @@ build-backend = "maturin"
 [project]
 name = "imagetext_py"
 description = "Python bindings for imagetext"
-version = "2.0.0"
+version = "2.0.1"
 authors = [
     { name = "Nathaniel Fernande", email = "nathaniel.s.fernandes@gmail.com" },
 ]

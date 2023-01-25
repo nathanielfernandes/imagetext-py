@@ -21,6 +21,8 @@ imagetext makes use of [rusttype](https://github.com/redox-os/rusttype) for font
 - Font fallbacks
 - Text stroke 
 - Gradient fills 
+- Emojis! (almost every platform supported)
+- Global Font Database with css-like font querying
 
 ## Installation
 
@@ -76,34 +78,32 @@ produces this image:
 ##### took `6ms` to draw this on my machine
 
 
-
-## Pillow Usage
+## Pillow and FontDB Usage 
 ```python
 from PIL import Image
 from imagetext_py import *
 
-font = Font("coolvetica.ttf", fallbacks=["emojis.ttf", "japanese.otf"])
+FontDB.SetDefaultEmojiOptions(EmojiOptions(allow_discord=True))
+FontDB.LoadFromDir(".")
 
-black = Paint.Color((0, 0, 0, 255))
-rainbow = Paint.Rainbow((0.0,0.0), (256.0,256.0))
+font = FontDB.Query("coolvetica japanese")
 
-# images must be converted to RGBA
-im = Image.open("unknown.png").convert("RGBA")
-
-# note: drawing operations are only applied after the context manager exits
-with Writer(im) as w:
-    w.draw_text_wrapped(
-        text="hello my 😓 n🐢ame i☕s 会のすべ aての構成員 nathan and i drink soup boop coop, the quick brown fox jumps over the lazy dog",
-        x=256, y=256,
-        ax=0.5, ay=0.5,
-        width=512,
-        size=67,
-        font=font,
-        fill=black,
-        align=TextAlign.Center,
-        stroke=2.0,
-        stroke_color=rainbow
-    )
-
-im.save("test.png")
+with Image.new("RGBA", (512, 512), "white") as im:
+    with Writer(im) as w:
+        w.draw_text_wrapped(
+            text="hello from python 😓 lol, <:blobpain:739614945045643447> " \
+                 "ほまみ <:chad:682819256173461522><:bigbrain:744344773229543495> " \
+                 "emojis workin",
+            x=256, y=256,
+            ax=0.5, ay=0.5,
+            width=512,
+            size=90,
+            font=font,
+            fill=Paint.Color((0, 0, 0, 255)),
+            align=TextAlign.Center,
+            stroke=2.0,
+            stroke_color=Paint.Rainbow((0.0,0.0), (256.0,256.0)),
+            draw_emojis=True
+        )
+    im.save("test.png")
 ```

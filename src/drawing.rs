@@ -32,7 +32,7 @@ pub fn draw_text(
             x,
             y,
             scale(size),
-            &font.superfont(),
+            &font.superfont,
             DefaultEmojiResolver,
             text,
         )
@@ -50,7 +50,7 @@ pub fn draw_text(
             x,
             y,
             scale(size),
-            &font.superfont(),
+            &font.superfont,
             text,
         )
         .map_err(|e| {
@@ -87,7 +87,7 @@ pub fn draw_text_anchored(
             ax,
             ay,
             scale(size),
-            &font.superfont(),
+            &font.superfont,
             DefaultEmojiResolver,
             text,
         )
@@ -107,7 +107,7 @@ pub fn draw_text_anchored(
             ax,
             ay,
             scale(size),
-            &font.superfont(),
+            &font.superfont,
             text,
         )
         .map_err(|e| {
@@ -148,7 +148,7 @@ pub fn draw_text_multiline(
             ay,
             width,
             scale(size),
-            &font.superfont(),
+            &font.superfont,
             DefaultEmojiResolver,
             &lines,
             line_spacing.unwrap_or(1.0),
@@ -171,7 +171,7 @@ pub fn draw_text_multiline(
             ay,
             width,
             scale(size),
-            &font.superfont(),
+            &font.superfont,
             &lines,
             line_spacing.unwrap_or(1.0),
             align.unwrap_or(&TextAlign::Left).to_align(),
@@ -214,7 +214,7 @@ pub fn draw_text_wrapped(
             ay,
             width,
             scale(size),
-            &font.superfont(),
+            &font.superfont,
             DefaultEmojiResolver,
             text,
             line_spacing.unwrap_or(1.0),
@@ -237,7 +237,7 @@ pub fn draw_text_wrapped(
             ay,
             width,
             scale(size),
-            &font.superfont(),
+            &font.superfont,
             text,
             line_spacing.unwrap_or(1.0),
             align.unwrap_or(&TextAlign::Left).to_align(),

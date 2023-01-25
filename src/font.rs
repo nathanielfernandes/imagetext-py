@@ -5,9 +5,7 @@ use crate::objects::EmojiOptions;
 
 #[pyclass]
 pub struct Font {
-    pub font: imagetext::prelude::Font<'static>,
-    pub fallbacks: Vec<imagetext::prelude::Font<'static>>,
-    pub emoji_options: imagetext::emoji::EmojiOptions,
+    pub superfont: SuperFont<'static>,
 }
 
 #[pymethods]
@@ -39,15 +37,88 @@ impl Font {
         };
 
         Ok(Font {
-            font,
-            fallbacks,
-            emoji_options: emoji_options.unwrap_or_default().to_emoji_options(),
+            superfont: SuperFont::with_emoji_options(
+                font,
+                fallbacks,
+                emoji_options.unwrap_or_default().to_emoji_options(),
+            ),
         })
+    }
+
+    pub fn set_emoji_options(&mut self) {
+        self.superfont.emoji_options = EmojiOptions::default().to_emoji_options()
     }
 }
 
-impl Font {
-    pub fn superfont<'a>(&'a self) -> SuperFont<'a, 'a> {
-        SuperFont::with_emoji_options(&self.font, &self.fallbacks, self.emoji_options.clone())
+#[pyclass]
+pub struct FontDB;
+
+#[allow(non_snake_case)]
+#[pymethods]
+impl FontDB {
+    #[staticmethod]
+    pub fn LoadFromPath(name: &str, path: &str) -> PyResult<()> {
+        imagetext::fontdb::FontDB::load_from_path(name, path).map_err(|e| {
+            PyErr::new::<pyo3::exceptions::PyIOError, _>(format!("Failed to load font: {}", e))
+        })
+    }
+
+    #[staticmethod]
+    pub fn LoadFromDir(path: &str) {
+        imagetext::fontdb::FontDB::load_from_dir(path)
+    }
+
+    #[staticmethod]
+    pub fn LoadSystemFonts() {
+        imagetext::fontdb::FontDB::load_system_fonts()
+    }
+
+    #[staticmethod]
+    pub fn Query(query: &str) -> PyResult<Font> {
+        let font = imagetext::fontdb::FontDB::query(query).ok_or_else(|| {
+            PyErr::new::<pyo3::exceptions::PyValueError, _>(format!(
+                "No fonts found for query: {}",
+                query
+            ))
+        })?;
+        Ok(Font { superfont: font })
+    }
+
+    #[staticmethod]
+    pub fn Get(name: &str) -> PyResult<Font> {
+        let font = imagetext::fontdb::FontDB::get(name).ok_or_else(|| {
+            PyErr::new::<pyo3::exceptions::PyValueError, _>(format!(
+                "No fonts found for name: {}",
+                name
+            ))
+        })?;
+        Ok(Font {
+            superfont: SuperFont::new(font, vec![]),
+        })
+    }
+
+    #[staticmethod]
+    pub fn QueryWithEmoji(query: &str, emoji_options: EmojiOptions) -> PyResult<Font> {
+        let font =
+            imagetext::fontdb::FontDB::query_with_emoji(query, emoji_options.to_emoji_options())
+                .ok_or_else(|| {
+                    PyErr::new::<pyo3::exceptions::PyValueError, _>(format!(
+                        "No fonts found for query: {}",
+                        query
+                    ))
+                })?;
+        Ok(Font { superfont: font })
+    }
+
+    #[staticmethod]
+    pub fn Remove(name: &str) -> PyResult<()> {
+        imagetext::fontdb::FontDB::remove(name).map_err(|e| {
+            PyErr::new::<pyo3::exceptions::PyIOError, _>(format!("Failed to remove font: {}", e))
+        })
+    }
+
+    #[staticmethod]
+    pub fn SetDefaultEmojiOptions(emoji_options: EmojiOptions) {
+        imagetext::fontdb::FontDB::set_default_emoji_options(emoji_options.to_emoji_options())
     }
 }
