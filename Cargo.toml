@@ -11,7 +11,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 pyo3 = { version = "0.18.0", features = ["extension-module"] }
-imagetext = { path = "./imagetext", features = ["emoji", "default-resolver", "fontdb"]}
+imagetext = { path = "./imagetext", features = ["emoji", "default-resolver", "fontdb", "crosscompile"]}
 image = "0.24.5"
 
 [dependencies.openssl]

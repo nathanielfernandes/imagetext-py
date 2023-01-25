@@ -561,6 +561,7 @@ dependencies = [
  "log",
  "moka",
  "once_cell",
+ "openssl",
  "rayon",
  "regex",
  "reqwest",
