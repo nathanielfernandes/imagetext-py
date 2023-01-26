@@ -1,6 +1,7 @@
 /target
 
 testing
+threaded 
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
