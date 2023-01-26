@@ -42,7 +42,12 @@ impl Canvas {
         let buffer: Vec<u8> = image.call_method0("tobytes")?.extract()?;
 
         Ok(Canvas {
-            im: image::RgbaImage::from_raw(width, height, buffer).unwrap(),
+            im: image::RgbaImage::from_raw(width, height, buffer).ok_or(PyErr::new::<
+                pyo3::exceptions::PyValueError,
+                _,
+            >(
+                "Failed to convert image",
+            ))?,
         })
     }
 
