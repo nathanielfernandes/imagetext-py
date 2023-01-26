@@ -571,7 +571,7 @@ dependencies = [
 
 [[package]]
 name = "imagetext_py"
-version = "2.0.1"
+version = "2.0.2"
 dependencies = [
  "image",
  "imagetext",

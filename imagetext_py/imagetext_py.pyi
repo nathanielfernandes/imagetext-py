@@ -299,7 +299,7 @@ def draw_text_anchored(
 
 def draw_text_multiline(
     canvas: Canvas,
-    text: str,
+    lines: list[str],
     x: float,
     y: float,
     ax: float,
@@ -318,7 +318,7 @@ def draw_text_multiline(
 
     Args:
         canvas (Canvas): The canvas.
-        text (str): The text to draw.
+        lines (list[str]): The lines of text to draw.
         x (float): The x position of the text.
         y (float): The y position of the text.
         ax (float): The x anchor of the text.

@@ -57,14 +57,18 @@ class Color(tuple):
 
 
 
-@dataclass
 class EmojiOptions:
-    scale: float = 1.0
-    shift: tuple[int, int] = (0, 0)
+    def __init__(self, scale: float = 1.0, shift: tuple[int, int] = (0, 0), allow_shortcodes: bool = True, allow_discord: bool = True, source: EmojiSource = EmojiSource.Twitter) -> None:
+        """Create a new emoji options object.
 
-    allow_shortcodes: bool = True
-    allow_discord: bool = True
-    source: EmojiSource = EmojiSource.Twitter
+        Args:
+            **kwargs: The options.
+        """
+        self.scale = scale
+        self.shift = shift
+        self.allow_shortcodes = allow_shortcodes
+        self.allow_discord = allow_discord
+        self.source = source
 
 
 class Writer:
