@@ -67,8 +67,8 @@ pub struct EmojiOptions {
     pub scale: f32,
     pub shift: (i64, i64),
 
-    pub allow_shortcodes: bool,
-    pub allow_discord: bool,
+    pub parse_shortcodes: bool,
+    pub parse_discord_emojis: bool,
     pub source: EmojiSource,
 }
 
@@ -78,8 +78,8 @@ impl EmojiOptions {
             scale: self.scale,
             shift: self.shift,
 
-            allow_shortcodes: self.allow_shortcodes,
-            allow_discord: self.allow_discord,
+            parse_shortcodes: self.parse_shortcodes,
+            parse_discord_emojis: self.parse_discord_emojis,
             source: self.source.to_emoji_source(),
         }
     }
@@ -91,9 +91,25 @@ impl Default for EmojiOptions {
             scale: 1.0,
             shift: (0, 0),
 
-            allow_shortcodes: true,
-            allow_discord: false,
+            parse_shortcodes: true,
+            parse_discord_emojis: false,
             source: EmojiSource::Twitter,
+        }
+    }
+}
+
+#[derive(Clone, Copy)]
+#[pyclass]
+pub enum WrapStyle {
+    Word,
+    Character,
+}
+
+impl WrapStyle {
+    pub fn to_wrap_style(&self) -> imagetext::wrap::WrapStyle {
+        match self {
+            WrapStyle::Word => imagetext::wrap::WrapStyle::Word,
+            WrapStyle::Character => imagetext::wrap::WrapStyle::Character,
         }
     }
 }

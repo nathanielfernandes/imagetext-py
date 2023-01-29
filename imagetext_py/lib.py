@@ -1,5 +1,4 @@
 from __future__ import annotations
-from dataclasses import dataclass
 
 from imagetext_py.imagetext_py import *
 
@@ -58,16 +57,20 @@ class Color(tuple):
 
 
 class EmojiOptions:
-    def __init__(self, scale: float = 1.0, shift: tuple[int, int] = (0, 0), allow_shortcodes: bool = True, allow_discord: bool = True, source: EmojiSource = EmojiSource.Twitter) -> None:
+    def __init__(self, scale: float = 1.0, shift: tuple[int, int] = (0, 0), parse_shortcodes: bool = True, parse_discord_emojis: bool = False, source: EmojiSource = EmojiSource.Twitter) -> None:
         """Create a new emoji options object.
 
         Args:
-            **kwargs: The options.
+            scale (float, optional): The scale of the emojis. Defaults to 1.0.
+            shift (tuple[int, int], optional): The shift of the emojis. Defaults to (0, 0).
+            parse_shortcodes (bool, optional): Whether to parse shortcodes. Defaults to True.
+            parse_discord_emojis (bool, optional): Whether to parse discord emojis. Defaults to False.
+            source (EmojiSource, optional): The emoji source. Defaults to EmojiSource.Twitter.
         """
         self.scale = scale
         self.shift = shift
-        self.allow_shortcodes = allow_shortcodes
-        self.allow_discord = allow_discord
+        self.parse_shortcodes = parse_shortcodes
+        self.parse_discord_emojis = parse_discord_emojis
         self.source = source
 
 
@@ -207,6 +210,7 @@ class Writer:
         stroke: Paint=None,
         stroke_color: Paint=None,
         draw_emojis: bool=False,
+        wrap_style: WrapStyle=WrapStyle.Word,
     ) -> None:
         """Draw text on the image.
 
@@ -225,5 +229,6 @@ class Writer:
             stroke (Paint, optional): The stroke paint. Defaults to None.
             stroke_color (Paint, optional): The stroke color. Defaults to None.
             draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
+            wrap_style (WrapStyle, optional): The wrap style. Defaults to WrapStyle.Word.
         """
-        draw_text_wrapped(self._canvas, text, x, y, ax, ay, width, size, font, fill, line_spacing, align, stroke, stroke_color, draw_emojis)
+        draw_text_wrapped(self._canvas, text, x, y, ax, ay, width, size, font, fill, line_spacing, align, stroke, stroke_color, draw_emojis, wrap_style)

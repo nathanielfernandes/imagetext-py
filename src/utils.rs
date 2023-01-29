@@ -1,6 +1,6 @@
 use pyo3::prelude::*;
 
-use crate::font::Font;
+use crate::{font::Font, objects::WrapStyle};
 use imagetext::prelude::*;
 
 #[pyfunction]
@@ -49,16 +49,31 @@ pub fn text_size_multiline(
 }
 
 #[pyfunction]
-pub fn word_wrap(
+pub fn text_wrap(
     text: &str,
     width: i32,
     size: f32,
     font: &Font,
     draw_emojis: Option<bool>,
+    wrap_style: Option<WrapStyle>,
 ) -> Vec<String> {
     if draw_emojis.unwrap_or(false) {
-        imagetext::wrap::word_wrap_with_emojis(text, width, &font.superfont, scale(size))
+        imagetext::wrap::text_wrap(
+            text,
+            width,
+            &font.superfont,
+            scale(size),
+            wrap_style.unwrap_or(WrapStyle::Word).to_wrap_style(),
+            text_width_with_emojis,
+        )
     } else {
-        imagetext::wrap::word_wrap(text, width, &font.superfont, scale(size))
+        imagetext::wrap::text_wrap(
+            text,
+            width,
+            &font.superfont,
+            scale(size),
+            wrap_style.unwrap_or(WrapStyle::Word).to_wrap_style(),
+            imagetext::measure::text_width,
+        )
     }
 }

@@ -46,7 +46,7 @@ pub fn draw_text(
                 y,
                 scale(size),
                 &font.superfont,
-                DefaultEmojiResolver,
+                DefaultEmojiResolver::<true>,
                 text,
             )
             .map_err(|e| {
@@ -142,7 +142,7 @@ pub fn draw_text_anchored(
                 ay,
                 scale(size),
                 &font.superfont,
-                DefaultEmojiResolver,
+                DefaultEmojiResolver::<true>,
                 text,
             )
             .map_err(|e| {
@@ -249,7 +249,7 @@ pub fn draw_text_multiline(
                 width,
                 scale(size),
                 &font.superfont,
-                DefaultEmojiResolver,
+                DefaultEmojiResolver::<true>,
                 &lines,
                 line_spacing.unwrap_or(1.0),
                 align.unwrap_or(&TextAlign::Left).to_align(),
@@ -331,6 +331,7 @@ pub fn draw_text_wrapped(
     stroke: Option<f32>,
     stroke_color: Option<&Paint>,
     draw_emojis: Option<bool>,
+    wrap_style: Option<&crate::objects::WrapStyle>,
 ) -> PyResult<()> {
     fn draw_text_wrapped_inner(
         im: &mut image::RgbaImage,
@@ -348,6 +349,7 @@ pub fn draw_text_wrapped(
         stroke: Option<f32>,
         stroke_color: Option<&Paint>,
         draw_emojis: Option<bool>,
+        wrap_style: Option<&crate::objects::WrapStyle>,
     ) -> PyResult<()> {
         if draw_emojis.unwrap_or(false) {
             imagetext::drawing::text::draw_text_wrapped_with_emojis(
@@ -364,10 +366,13 @@ pub fn draw_text_wrapped(
                 width,
                 scale(size),
                 &font.superfont,
-                DefaultEmojiResolver,
+                DefaultEmojiResolver::<true>,
                 text,
                 line_spacing.unwrap_or(1.0),
                 align.unwrap_or(&TextAlign::Left).to_align(),
+                wrap_style
+                    .unwrap_or(&crate::objects::WrapStyle::Word)
+                    .to_wrap_style(),
             )
             .map_err(|e| {
                 PyErr::new::<pyo3::exceptions::PyValueError, _>(format!(
@@ -393,6 +398,9 @@ pub fn draw_text_wrapped(
                 text,
                 line_spacing.unwrap_or(1.0),
                 align.unwrap_or(&TextAlign::Left).to_align(),
+                wrap_style
+                    .unwrap_or(&crate::objects::WrapStyle::Word)
+                    .to_wrap_style(),
             )
             .map_err(|e| {
                 PyErr::new::<pyo3::exceptions::PyValueError, _>(format!(
@@ -420,6 +428,7 @@ pub fn draw_text_wrapped(
             stroke,
             stroke_color,
             draw_emojis,
+            wrap_style,
         ),
         Err(e) => Err(PyErr::new::<pyo3::exceptions::PyValueError, _>(format!(
             "Failed to draw text: {}",

@@ -236,6 +236,9 @@ class TextAlign(Enum):
     Center = 1
     Right = 2
 
+class WrapStyle(Enum):
+    Word = 0
+    Character = 1
 
 def draw_text(
     canvas: Canvas,
@@ -351,6 +354,7 @@ def draw_text_wrapped(
     stroke: Paint=None,
     stroke_color: Paint=None,
     draw_emojis: bool=True,
+    wrap_style: WrapStyle=WrapStyle.Word,
 ) -> None:
     """Draw text on a canvas.
 
@@ -370,6 +374,7 @@ def draw_text_wrapped(
         stroke (Paint, optional): The stroke of the text. Defaults to None.
         stroke_color (Paint, optional): The stroke color of the text. Defaults to None.
         draw_emojis (bool, optional): Whether to draw emojis. Defaults to True.
+        wrap_style (WrapStyle, optional): The wrap style. Defaults to WrapStyle.Word.
     """
 
 def text_size(
@@ -411,7 +416,7 @@ def text_size_multiline(
     """
 
 
-def word_wrap(text: str, width: float, size: float, font: Font, draw_emojis: bool=True) -> list[str]:
+def text_wrap(text: str, width: float, size: float, font: Font, draw_emojis: bool=True, wrap_style: WrapStyle=WrapStyle.Word) -> list[str]:
     """Wrap a text on a given pixel width.
 
     Args:
@@ -420,6 +425,7 @@ def word_wrap(text: str, width: float, size: float, font: Font, draw_emojis: boo
         size (float): The size of the text.
         font (Font): The font of the text.
         draw_emojis (bool, optional): Whether to draw emojis. Defaults to True.
+        wrap_style (WrapStyle, optional): The wrap style. Defaults to WrapStyle.Word.
 
     Returns:
         list[str]: The wrapped text.

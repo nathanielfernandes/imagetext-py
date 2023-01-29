@@ -6,7 +6,16 @@
   ###### imagetext-py is python bindings for [imagetext](https://github.com/nathanielfernandes/imagetext)
 
 
+<div style="display: flex; justify-content: center; gap: 5px; margin-top: 10px">
+
 [![CI](https://github.com/nathanielfernandes/imagetext-py/actions/workflows/CI.yml/badge.svg?event=push)](https://github.com/nathanielfernandes/imagetext-py/actions/workflows/CI.yml)
+
+[![pypi](https://img.shields.io/pypi/v/imagetext-py)](https://pypi.org/project/imagetext-py/)
+
+[![discord](https://img.shields.io/discord/1067663746786414632?label=discord)](https://discord.gg/e4T2qycHJz)
+
+</div>
+
   ---
   
 </div>
