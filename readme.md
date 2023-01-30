@@ -8,11 +8,15 @@
 
 [![CI](https://github.com/nathanielfernandes/imagetext-py/actions/workflows/CI.yml/badge.svg?event=push)](https://github.com/nathanielfernandes/imagetext-py/actions/workflows/CI.yml)
 [![pypi](https://img.shields.io/pypi/v/imagetext-py)](https://pypi.org/project/imagetext-py/)
+[![Downloads](https://static.pepy.tech/personalized-badge/imagetext-py?period=total&units=international_system&left_color=grey&right_color=blue&left_text=Downloads)](https://pepy.tech/project/imagetext-py)
+![PythonVersions](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11-blue) 
 [![discord](https://img.shields.io/discord/1067663746786414632?label=discord)](https://discord.gg/e4T2qycHJz)
 
   ---
   
 </div>
+
+> if you found this library useful, consider leaving a star ⭐
 
 ## About 
 imagetext makes use of [rusttype](https://github.com/redox-os/rusttype) for font parsing and [tiny-skia](https://github.com/RazrFalcon/tiny-skia) for drawing. It has a simple API that allows you to draw text with ease.

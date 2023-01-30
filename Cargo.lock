@@ -553,7 +553,7 @@ dependencies = [
 
 [[package]]
 name = "imagetext"
-version = "0.1.0"
+version = "2.1.1"
 dependencies = [
  "emojis",
  "fxhash",
@@ -572,7 +572,7 @@ dependencies = [
 
 [[package]]
 name = "imagetext_py"
-version = "2.1.0"
+version = "2.1.1"
 dependencies = [
  "image",
  "imagetext",

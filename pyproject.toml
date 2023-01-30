@@ -5,9 +5,9 @@ build-backend = "maturin"
 [project]
 name = "imagetext_py"
 description = "Python bindings for imagetext"
-version = "2.1.0"
+version = "2.1.1"
 authors = [
-    { name = "Nathaniel Fernande", email = "nathaniel.s.fernandes@gmail.com" },
+    { name = "Nathaniel Fernandes", email = "nathaniel.s.fernandes@gmail.com" },
 ]
 readme = "readme.md"
 license = { file = "LICENSE" }  
