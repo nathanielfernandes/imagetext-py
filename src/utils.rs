@@ -84,7 +84,11 @@ pub fn text_wrap(
                         let rep = match emoji {
                             EmojiType::Discord(id) => format!("<:ee:{}>", id),
                             EmojiType::Regular(e) => {
-                                format!(":{}:", e.shortcode().unwrap_or_else(|| e.as_str()))
+                                if let Some(code) = e.shortcode() {
+                                    format!(":{}:", code)
+                                } else {
+                                    e.as_str().to_string()
+                                }
                             }
                         };
                         *line = line.replacen("😀", &rep, 1);
