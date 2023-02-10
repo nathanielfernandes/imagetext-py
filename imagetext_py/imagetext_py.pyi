@@ -250,7 +250,7 @@ def draw_text(
     fill: Paint,
     stroke: Paint=None,
     stroke_color: Paint=None,
-    draw_emojis: bool=True,
+    draw_emojis: bool=False,
 ) -> None:
     """Draw text on a canvas.
 
@@ -264,7 +264,7 @@ def draw_text(
         fill (Paint): The fill of the text.
         stroke (Paint, optional): The stroke of the text. Defaults to None.
         stroke_color (Paint, optional): The stroke color of the text. Defaults to None.
-        draw_emojis (bool, optional): Whether to draw emojis. Defaults to True.
+        draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
     """
 
 def draw_text_anchored(
@@ -279,7 +279,7 @@ def draw_text_anchored(
     fill: Paint,
     stroke: Paint=None,
     stroke_color: Paint=None,
-    draw_emojis: bool=True,
+    draw_emojis: bool=False,
 ) -> None:
     """Draw text on a canvas.
 
@@ -295,7 +295,7 @@ def draw_text_anchored(
         fill (Paint): The fill of the text.
         stroke (Paint, optional): The stroke of the text. Defaults to None.
         stroke_color (Paint, optional): The stroke color of the text. Defaults to None.
-        draw_emojis (bool, optional): Whether to draw emojis. Defaults to True.
+        draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
     """
 
 
@@ -315,7 +315,7 @@ def draw_text_multiline(
     align: TextAlign=TextAlign.Left,
     stroke: Paint=None,
     stroke_color: Paint=None,
-    draw_emojis: bool=True,
+    draw_emojis: bool=False,
 ) -> None:
     """Draw text on a canvas.
 
@@ -334,7 +334,7 @@ def draw_text_multiline(
         align (TextAlign, optional): The text alignment. Defaults to TextAlign.Left.
         stroke (Paint, optional): The stroke of the text. Defaults to None.
         stroke_color (Paint, optional): The stroke color of the text. Defaults to None.
-        draw_emojis (bool, optional): Whether to draw emojis. Defaults to True.
+        draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
     """
 
 
@@ -353,7 +353,7 @@ def draw_text_wrapped(
     align: TextAlign=TextAlign.Left,
     stroke: Paint=None,
     stroke_color: Paint=None,
-    draw_emojis: bool=True,
+    draw_emojis: bool=False,
     wrap_style: WrapStyle=WrapStyle.Word,
 ) -> None:
     """Draw text on a canvas.
@@ -373,7 +373,7 @@ def draw_text_wrapped(
         align (TextAlign, optional): The text alignment. Defaults to TextAlign.Left.
         stroke (Paint, optional): The stroke of the text. Defaults to None.
         stroke_color (Paint, optional): The stroke color of the text. Defaults to None.
-        draw_emojis (bool, optional): Whether to draw emojis. Defaults to True.
+        draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
         wrap_style (WrapStyle, optional): The wrap style. Defaults to WrapStyle.Word.
     """
 
@@ -381,7 +381,7 @@ def text_size(
     text: str,
     size: float,
     font: Font,
-    draw_emojis: bool=True,
+    draw_emojis: bool=False,
 ) -> tuple[int, int]:
     """Get the size of a text in pixels.
 
@@ -389,7 +389,7 @@ def text_size(
         text (str): The text.
         size (float): The size of the text.
         font (Font): The font of the text.
-        draw_emojis (bool, optional): Whether to draw emojis. Defaults to True.
+        draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
 
     Returns:
         tuple[float, float]: The size of the text.
@@ -400,7 +400,7 @@ def text_size_multiline(
     size: float,
     font: Font,
     line_spacing: float=1.0,
-    draw_emojis: bool=True,
+    draw_emojis: bool=False,
 ) -> tuple[int, int]:
     """Get the size of a text in pixels.
 
@@ -409,14 +409,14 @@ def text_size_multiline(
         size (float): The size of the text.
         font (Font): The font of the text.
         line_spacing (float, optional): The line spacing. Defaults to 1.0.
-        draw_emojis (bool, optional): Whether to draw emojis. Defaults to True.
+        draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
 
     Returns:
         tuple[float, float]: The size of the text.
     """
 
 
-def text_wrap(text: str, width: float, size: float, font: Font, draw_emojis: bool=True, wrap_style: WrapStyle=WrapStyle.Word) -> list[str]:
+def text_wrap(text: str, width: float, size: float, font: Font, draw_emojis: bool=False, wrap_style: WrapStyle=WrapStyle.Word) -> list[str]:
     """Wrap a text on a given pixel width.
 
     Args:
@@ -424,7 +424,7 @@ def text_wrap(text: str, width: float, size: float, font: Font, draw_emojis: boo
         width (float): The width to wrap on.
         size (float): The size of the text.
         font (Font): The font of the text.
-        draw_emojis (bool, optional): Whether to draw emojis. Defaults to True.
+        draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
         wrap_style (WrapStyle, optional): The wrap style. Defaults to WrapStyle.Word.
 
     Returns:

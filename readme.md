@@ -28,8 +28,10 @@ imagetext makes use of [rusttype](https://github.com/redox-os/rusttype) for font
 - Font fallbacks
 - Text stroke 
 - Gradient fills 
-- Emojis! (almost every platform supported)
+- Emojis! (almost every platform supported, including discord)
 - Global Font Database with css-like font querying
+
+> Note: emojis are fetched and cached from the internet during runtime, so you will need an internet connection to use them. The ability to use local emoji images will be added soon.
 
 ## Installation
 
@@ -44,7 +46,8 @@ from PIL import Image
 from imagetext_py import *
 
 # supports fonts with fallbacks
-font = Font("coolvetica.ttf", fallbacks=["emojis.ttf", "japanese.otf"])
+FontDB.LoadFromDir(".")
+font = FontDB.Query("coolvetica japanese")
 
 # create a canvas to draw on
 cv = Canvas(512, 512, (255, 255, 255, 255))
@@ -66,7 +69,8 @@ draw_text_wrapped(canvas=cv,              # the canvas to draw on
                   fill=black,
                   align=TextAlign.Center,
                   stroke=2.0,             # the stroke width (optional)
-                  stroke_color=rainbow)   # the stroke color (optional)
+                  stroke_color=rainbow,
+                  draw_emojis=True)   # the stroke color (optional)
 
 # you can convert the canvas to a PIL image
 im: Image.Image = cv.to_image()
@@ -90,7 +94,7 @@ produces this image:
 from PIL import Image
 from imagetext_py import *
 
-FontDB.SetDefaultEmojiOptions(EmojiOptions(allow_discord=True))
+FontDB.SetDefaultEmojiOptions(EmojiOptions(parse_discord_emojis=True))
 FontDB.LoadFromDir(".")
 
 font = FontDB.Query("coolvetica japanese")
@@ -103,7 +107,7 @@ with Image.new("RGBA", (512, 512), "white") as im:
                  "emojis workin",
             x=256, y=256,
             ax=0.5, ay=0.5,
-            width=512,
+            width=500,
             size=90,
             font=font,
             fill=Paint.Color((0, 0, 0, 255)),
