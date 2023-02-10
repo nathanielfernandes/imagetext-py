@@ -21,6 +21,8 @@
 ## About 
 imagetext makes use of [rusttype](https://github.com/redox-os/rusttype) for font parsing and [tiny-skia](https://github.com/RazrFalcon/tiny-skia) for drawing. It has a simple API that allows you to draw text with ease.
 
+Currently imagetext-py does beat out Pillow for most of the cases I've tested, but I will setup some benchmarks soon.
+
 ## Features
 - Multi-line text
 - Text wrapping
@@ -84,9 +86,7 @@ cv.save("test.png")
 ```
 produces this image:
 
-![test.png](https://cdn.discordapp.com/attachments/749779629643923548/1065477410281246791/image.png)
-
-##### took `6ms` to draw this on my machine
+![test.png](https://cdn.discordapp.com/attachments/741384050387714162/1073465855901446151/image.png)
 
 
 ## Pillow and FontDB Usage 
@@ -118,3 +118,7 @@ with Image.new("RGBA", (512, 512), "white") as im:
         )
     im.save("test.png")
 ```
+
+produces this image:
+
+![test.png](https://cdn.discordapp.com/attachments/741384050387714162/1073464353543696495/image.png)
