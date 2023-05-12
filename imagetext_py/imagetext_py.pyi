@@ -1,11 +1,10 @@
+from typing import TYPE_CHECKING, Optional
 from imagetext_py.lib import Color, EmojiOptions
 
 from enum import Enum
 
-try:
+if TYPE_CHECKING:
     from PIL import Image
-except:
-    pass
 
 class Canvas:
     def __new__(self, width: int, height: int, color: Color) -> Canvas:
@@ -248,8 +247,8 @@ def draw_text(
     size: float,
     font: Font,
     fill: Paint,
-    stroke: Paint=None,
-    stroke_color: Paint=None,
+    stroke: Optional[float]=None,
+    stroke_color: Optional[Paint]=None,
     draw_emojis: bool=False,
 ) -> None:
     """Draw text on a canvas.
@@ -262,7 +261,7 @@ def draw_text(
         size (float): The size of the text.
         font (Font): The font of the text.
         fill (Paint): The fill of the text.
-        stroke (Paint, optional): The stroke of the text. Defaults to None.
+        stroke (float, optional): The stroke of the text. Defaults to None.
         stroke_color (Paint, optional): The stroke color of the text. Defaults to None.
         draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
     """
@@ -277,8 +276,8 @@ def draw_text_anchored(
     size: float,
     font: Font,
     fill: Paint,
-    stroke: Paint=None,
-    stroke_color: Paint=None,
+    stroke: Optional[float]=None,
+    stroke_color: Optional[Paint]=None,
     draw_emojis: bool=False,
 ) -> None:
     """Draw text on a canvas.
@@ -293,7 +292,7 @@ def draw_text_anchored(
         size (float): The size of the text.
         font (Font): The font of the text.
         fill (Paint): The fill of the text.
-        stroke (Paint, optional): The stroke of the text. Defaults to None.
+        stroke (float, optional): The stroke of the text. Defaults to None.
         stroke_color (Paint, optional): The stroke color of the text. Defaults to None.
         draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
     """
@@ -313,8 +312,8 @@ def draw_text_multiline(
     fill: Paint,
     line_spacing: float=1.0,
     align: TextAlign=TextAlign.Left,
-    stroke: Paint=None,
-    stroke_color: Paint=None,
+    stroke: Optional[float]=None,
+    stroke_color: Optional[Paint]=None,
     draw_emojis: bool=False,
 ) -> None:
     """Draw text on a canvas.
@@ -332,7 +331,7 @@ def draw_text_multiline(
         fill (Paint): The fill of the text.
         line_spacing (float, optional): The line spacing. Defaults to 1.0.
         align (TextAlign, optional): The text alignment. Defaults to TextAlign.Left.
-        stroke (Paint, optional): The stroke of the text. Defaults to None.
+        stroke (float, optional): The stroke of the text. Defaults to None.
         stroke_color (Paint, optional): The stroke color of the text. Defaults to None.
         draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
     """
@@ -351,8 +350,8 @@ def draw_text_wrapped(
     fill: Paint,
     line_spacing: float=1.0,
     align: TextAlign=TextAlign.Left,
-    stroke: Paint=None,
-    stroke_color: Paint=None,
+    stroke: Optional[float]=None,
+    stroke_color: Optional[Paint]=None,
     draw_emojis: bool=False,
     wrap_style: WrapStyle=WrapStyle.Word,
 ) -> None:
@@ -371,7 +370,7 @@ def draw_text_wrapped(
         fill (Paint): The fill of the text.
         line_spacing (float, optional): The line spacing. Defaults to 1.0.
         align (TextAlign, optional): The text alignment. Defaults to TextAlign.Left.
-        stroke (Paint, optional): The stroke of the text. Defaults to None.
+        stroke (float, optional): The stroke of the text. Defaults to None.
         stroke_color (Paint, optional): The stroke color of the text. Defaults to None.
         draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
         wrap_style (WrapStyle, optional): The wrap style. Defaults to WrapStyle.Word.
