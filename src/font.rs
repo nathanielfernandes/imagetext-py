@@ -45,8 +45,8 @@ impl Font {
         })
     }
 
-    pub fn set_emoji_options(&mut self) {
-        self.superfont.emoji_options = EmojiOptions::default().to_emoji_options()
+    pub fn set_emoji_options(&mut self, emoji_options: EmojiOptions) {
+        self.superfont.emoji_options = emoji_options.to_emoji_options();
     }
 }
 
