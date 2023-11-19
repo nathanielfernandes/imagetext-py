@@ -18,35 +18,30 @@ class Canvas:
         Returns:
             Canvas: The canvas.
         """
-
-    def save(self, path: str) -> None: 
+    def save(self, path: str) -> None:
         """Save the canvas to a file.
 
         Args:
             path (str): The path to save the file to.
         """
-
-    def to_bytes(self) -> tuple[tuple[int, int], bytes]: 
+    def to_bytes(self) -> tuple[tuple[int, int], bytes]:
         """Get the canvas as bytes.
 
         Returns:
             tuple[tuple[int, int], bytes]: The canvas dimensions and bytes.
         """
-
-    def to_image(self) -> "Image.Image": 
+    def to_image(self) -> "Image.Image":
         """Get the canvas as a PIL image.
 
         Returns:
             The canvas as an image.
         """
-
     def to_buffer(self) -> list[int]:
         """Get the canvas as a buffer.
 
         Returns:
             list[int]: The canvas as a buffer.
         """
-
     @staticmethod
     def from_image(image: "Image.Image") -> Canvas:
         """Create a canvas from an image.
@@ -58,9 +53,8 @@ class Canvas:
             Canvas: The canvas.
         """
 
-
 class Paint:
-    def __new__(self, color: Color=(0, 0, 0, 255), anti_alias: bool = True) -> Paint:
+    def __new__(self, color: Color = (0, 0, 0, 255), anti_alias: bool = True) -> Paint:
         """Create a new paint.
 
         Args:
@@ -70,23 +64,20 @@ class Paint:
         Returns:
             Paint: The paint.
         """
-    
-    def set_color(self, color: Color) -> None: 
+    def set_color(self, color: Color) -> None:
         """Set the color of the paint.
 
         Args:
             color (Color): The color.
         """
-
-    def set_anti_alias(self, anti_alias: bool) -> None: 
+    def set_anti_alias(self, anti_alias: bool) -> None:
         """Set the anti_alias of the paint.
-        
+
         default: True
 
         Args:
             anti_alias (bool): Whether to antialias.
         """
-
     @staticmethod
     def Color(color: Color) -> Paint:
         """Create a paint with a color.
@@ -97,9 +88,10 @@ class Paint:
         Returns:
             Paint: The paint.
         """
-
     @staticmethod
-    def Gradient(start: tuple[float, float], stop: tuple[float, float], colors: list[Color]) -> Paint:
+    def Gradient(
+        start: tuple[float, float], stop: tuple[float, float], colors: list[Color]
+    ) -> Paint:
         """Create a paint with a gradient.
 
         Args:
@@ -110,7 +102,6 @@ class Paint:
         Returns:
             Paint: The paint.
         """
-
     @staticmethod
     def Rainbow(start: tuple[float, float], stop: tuple[float, float]) -> Paint:
         """Create a paint with a rainbow gradient.
@@ -123,9 +114,10 @@ class Paint:
             Paint: The paint.
         """
 
-
 class Font:
-    def __new__(self, path: str, fallbacks: list[str]=None, emoji_options: EmojiOptions = None) -> Font:
+    def __new__(
+        self, path: str, fallbacks: list[str] = None, emoji_options: EmojiOptions = None
+    ) -> Font:
         """Create a new font.
 
         Args:
@@ -136,14 +128,12 @@ class Font:
         Returns:
             Font: The font.
         """
-
     def set_emoji_options(self, emoji_options: EmojiOptions) -> None:
         """Set the emoji options of the font.
 
         Args:
             emoji_options (EmojiOptions): The emoji options.
         """
-        
 
 class FontDB:
     @staticmethod
@@ -154,7 +144,6 @@ class FontDB:
             name (str): The inputted name of the font.
             path (str): The path to the font.
         """
-
     @staticmethod
     def LoadFromDir(path: str) -> None:
         """Recursively Load all fonts from a directory.
@@ -162,15 +151,13 @@ class FontDB:
         Args:
             path (str): The path to the directory.
         """
-
     @staticmethod
     def LoadSystemFonts() -> None:
         """Load all system found fonts."""
-
     @staticmethod
     def Query(names: str) -> Font:
         """Query a font by names. ex. 'Segoe-UI Segoe-UI-Emoji Segoe-UI-Symbol'
-        
+
         A font with fallbacks and using default emoji options will be returned.
 
         Args:
@@ -179,11 +166,10 @@ class FontDB:
         Returns:
             Font: The font.
         """
-
     @staticmethod
     def QueryWithEmoji(names: str, emoji_options: EmojiOptions) -> Font:
         """Query a font by names. ex. 'Segoe-UI Segoe-UI-Emoji Segoe-UI-Symbol'
-        
+
         A font with fallbacks will be returned.
 
         Args:
@@ -193,8 +179,6 @@ class FontDB:
         Returns:
             Font: The font.
         """
-
-
     @staticmethod
     def Remove(name: str) -> None:
         """Remove a font from the database.
@@ -202,7 +186,6 @@ class FontDB:
         Args:
             name (str): The name of the font.
         """
-
     @staticmethod
     def SetDefaultEmojiOptions(emoji_options: EmojiOptions) -> None:
         """Set the default emoji options.
@@ -210,9 +193,6 @@ class FontDB:
         Args:
             emoji_options (EmojiOptions): The emoji options.
         """
-    
-
-
 
 class EmojiSource(Enum):
     Twitter = 0
@@ -247,9 +227,9 @@ def draw_text(
     size: float,
     font: Font,
     fill: Paint,
-    stroke: Optional[float]=None,
-    stroke_color: Optional[Paint]=None,
-    draw_emojis: bool=False,
+    stroke: Optional[float] = None,
+    stroke_color: Optional[Paint] = None,
+    draw_emojis: bool = False,
 ) -> None:
     """Draw text on a canvas.
 
@@ -276,9 +256,9 @@ def draw_text_anchored(
     size: float,
     font: Font,
     fill: Paint,
-    stroke: Optional[float]=None,
-    stroke_color: Optional[Paint]=None,
-    draw_emojis: bool=False,
+    stroke: Optional[float] = None,
+    stroke_color: Optional[Paint] = None,
+    draw_emojis: bool = False,
 ) -> None:
     """Draw text on a canvas.
 
@@ -297,8 +277,6 @@ def draw_text_anchored(
         draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
     """
 
-
-
 def draw_text_multiline(
     canvas: Canvas,
     lines: list[str],
@@ -310,11 +288,11 @@ def draw_text_multiline(
     size: float,
     font: Font,
     fill: Paint,
-    line_spacing: float=1.0,
-    align: TextAlign=TextAlign.Left,
-    stroke: Optional[float]=None,
-    stroke_color: Optional[Paint]=None,
-    draw_emojis: bool=False,
+    line_spacing: float = 1.0,
+    align: TextAlign = TextAlign.Left,
+    stroke: Optional[float] = None,
+    stroke_color: Optional[Paint] = None,
+    draw_emojis: bool = False,
 ) -> None:
     """Draw text on a canvas.
 
@@ -336,7 +314,6 @@ def draw_text_multiline(
         draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
     """
 
-
 def draw_text_wrapped(
     canvas: Canvas,
     text: str,
@@ -348,12 +325,12 @@ def draw_text_wrapped(
     size: float,
     font: Font,
     fill: Paint,
-    line_spacing: float=1.0,
-    align: TextAlign=TextAlign.Left,
-    stroke: Optional[float]=None,
-    stroke_color: Optional[Paint]=None,
-    draw_emojis: bool=False,
-    wrap_style: WrapStyle=WrapStyle.Word,
+    line_spacing: float = 1.0,
+    align: TextAlign = TextAlign.Left,
+    stroke: Optional[float] = None,
+    stroke_color: Optional[Paint] = None,
+    draw_emojis: bool = False,
+    wrap_style: WrapStyle = WrapStyle.Word,
 ) -> None:
     """Draw text on a canvas.
 
@@ -380,7 +357,7 @@ def text_size(
     text: str,
     size: float,
     font: Font,
-    draw_emojis: bool=False,
+    draw_emojis: bool = False,
 ) -> tuple[int, int]:
     """Get the size of a text in pixels.
 
@@ -398,8 +375,8 @@ def text_size_multiline(
     lines: list[str],
     size: float,
     font: Font,
-    line_spacing: float=1.0,
-    draw_emojis: bool=False,
+    line_spacing: float = 1.0,
+    draw_emojis: bool = False,
 ) -> tuple[int, int]:
     """Get the size of a text in pixels.
 
@@ -414,8 +391,14 @@ def text_size_multiline(
         tuple[float, float]: The size of the text.
     """
 
-
-def text_wrap(text: str, width: float, size: float, font: Font, draw_emojis: bool=False, wrap_style: WrapStyle=WrapStyle.Word) -> list[str]:
+def text_wrap(
+    text: str,
+    width: float,
+    size: float,
+    font: Font,
+    draw_emojis: bool = False,
+    wrap_style: WrapStyle = WrapStyle.Word,
+) -> list[str]:
     """Wrap a text on a given pixel width.
 
     Args:
@@ -429,4 +412,3 @@ def text_wrap(text: str, width: float, size: float, font: Font, draw_emojis: boo
     Returns:
         list[str]: The wrapped text.
     """
-    
