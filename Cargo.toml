@@ -16,6 +16,5 @@ imagetext = { path = "./imagetext", features = [
     "emoji",
     "default-resolver",
     "fontdb",
-    "crosscompile",
 ] }
 image = "0.24.7"
