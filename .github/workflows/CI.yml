@@ -19,8 +19,11 @@ jobs:
         with:
           submodules: recursive
 
-      - name: openssl
-        run: sudo apt-get install pkg-config libssl-dev
+      - name: Install Perl
+        run: sudo apt-get install perl
+
+      - name: Install Make
+        run: sudo apt-get install make
 
       - name: Maturin Build
         uses: PyO3/maturin-action@v1
