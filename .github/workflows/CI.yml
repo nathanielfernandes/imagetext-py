@@ -19,11 +19,8 @@ jobs:
         with:
           submodules: recursive
 
-      - name: pkg-config
-        run: sudo apt install pkg-config
-
       - name: openssl
-        run: sudo apt install libssl-dev
+        run: sudo apt-get install pkg-config libssl-dev
 
       - name: Maturin Build
         uses: PyO3/maturin-action@v1
