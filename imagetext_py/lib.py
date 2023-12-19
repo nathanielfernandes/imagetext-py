@@ -7,6 +7,7 @@ try:
 except:
     pass
 
+
 class Color(tuple):
     def __new__(cls, r: int, g: int, b: int, a: int = 255) -> Color:
         """Create a new color.
@@ -55,9 +56,15 @@ class Color(tuple):
         return self[3]
 
 
-
 class EmojiOptions:
-    def __init__(self, scale: float = 1.0, shift: tuple[int, int] = (0, 0), parse_shortcodes: bool = True, parse_discord_emojis: bool = False, source: EmojiSource = EmojiSource.Twitter) -> None:
+    def __init__(
+        self,
+        scale: float = 1.0,
+        shift: tuple[int, int] = (0, 0),
+        parse_shortcodes: bool = True,
+        parse_discord_emojis: bool = False,
+        source: EmojiSource = EmojiSource.Twitter(),
+    ) -> None:
         """Create a new emoji options object.
 
         Args:
@@ -95,7 +102,9 @@ class Writer:
 
     @property
     def _canvas(self) -> Canvas:
-        assert self.__canvas is not None, "You must use the Writer as a context manager."
+        assert (
+            self.__canvas is not None
+        ), "You must use the Writer as a context manager."
         return self.__canvas
 
     def draw_text(
@@ -106,9 +115,9 @@ class Writer:
         size: float,
         font: Font,
         fill: Paint,
-        stroke: Paint=None,
-        stroke_color: Paint=None,
-        draw_emojis: bool=False,
+        stroke: Paint = None,
+        stroke_color: Paint = None,
+        draw_emojis: bool = False,
     ) -> None:
         """Draw text on the image.
 
@@ -123,7 +132,18 @@ class Writer:
             stroke_color (Paint, optional): The stroke color. Defaults to None.
             draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
         """
-        draw_text(self._canvas, text, x, y, size, font, fill, stroke, stroke_color, draw_emojis)
+        draw_text(
+            self._canvas,
+            text,
+            x,
+            y,
+            size,
+            font,
+            fill,
+            stroke,
+            stroke_color,
+            draw_emojis,
+        )
 
     def draw_text_anchored(
         self,
@@ -135,9 +155,9 @@ class Writer:
         size: float,
         font: Font,
         fill: Paint,
-        stroke: Paint=None,
-        stroke_color: Paint=None,
-        draw_emojis: bool=False,
+        stroke: Paint = None,
+        stroke_color: Paint = None,
+        draw_emojis: bool = False,
     ) -> None:
         """Draw text on the image.
 
@@ -154,7 +174,20 @@ class Writer:
             stroke_color (Paint, optional): The stroke color. Defaults to None.
             draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
         """
-        draw_text_anchored(self._canvas, text, x, y, ax, ay, size, font, fill, stroke, stroke_color, draw_emojis)
+        draw_text_anchored(
+            self._canvas,
+            text,
+            x,
+            y,
+            ax,
+            ay,
+            size,
+            font,
+            fill,
+            stroke,
+            stroke_color,
+            draw_emojis,
+        )
 
     def draw_text_multiline(
         self,
@@ -167,11 +200,11 @@ class Writer:
         size: float,
         font: Font,
         fill: Paint,
-        line_spacing: float=1.0,
-        align: TextAlign=TextAlign.Left,
-        stroke: Paint=None,
-        stroke_color: Paint=None,
-        draw_emojis: bool=False,
+        line_spacing: float = 1.0,
+        align: TextAlign = TextAlign.Left,
+        stroke: Paint = None,
+        stroke_color: Paint = None,
+        draw_emojis: bool = False,
     ) -> None:
         """Draw text on the image.
 
@@ -191,8 +224,23 @@ class Writer:
             stroke_color (Paint, optional): The stroke color. Defaults to None.
             draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
         """
-        draw_text_multiline(self._canvas, text, x, y, ax, ay, width, size, font, fill, line_spacing, align, stroke, stroke_color, draw_emojis)
-
+        draw_text_multiline(
+            self._canvas,
+            text,
+            x,
+            y,
+            ax,
+            ay,
+            width,
+            size,
+            font,
+            fill,
+            line_spacing,
+            align,
+            stroke,
+            stroke_color,
+            draw_emojis,
+        )
 
     def draw_text_wrapped(
         self,
@@ -205,12 +253,12 @@ class Writer:
         size: float,
         font: Font,
         fill: Paint,
-        line_spacing: float=1.0,
-        align: TextAlign=TextAlign.Left,
-        stroke: Paint=None,
-        stroke_color: Paint=None,
-        draw_emojis: bool=False,
-        wrap_style: WrapStyle=WrapStyle.Word,
+        line_spacing: float = 1.0,
+        align: TextAlign = TextAlign.Left,
+        stroke: Paint = None,
+        stroke_color: Paint = None,
+        draw_emojis: bool = False,
+        wrap_style: WrapStyle = WrapStyle.Word,
     ) -> None:
         """Draw text on the image.
 
@@ -231,4 +279,21 @@ class Writer:
             draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
             wrap_style (WrapStyle, optional): The wrap style. Defaults to WrapStyle.Word.
         """
-        draw_text_wrapped(self._canvas, text, x, y, ax, ay, width, size, font, fill, line_spacing, align, stroke, stroke_color, draw_emojis, wrap_style)
+        draw_text_wrapped(
+            self._canvas,
+            text,
+            x,
+            y,
+            ax,
+            ay,
+            width,
+            size,
+            font,
+            fill,
+            line_spacing,
+            align,
+            stroke,
+            stroke_color,
+            draw_emojis,
+            wrap_style,
+        )

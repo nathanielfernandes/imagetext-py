@@ -194,21 +194,123 @@ class FontDB:
             emoji_options (EmojiOptions): The emoji options.
         """
 
-class EmojiSource(Enum):
-    Twitter = 0
-    Apple = 1
-    Google = 2
-    Microsoft = 3
-    Samsung = 4
-    Whatsapp = 5
-    JoyPixels = 6
-    OpenMoji = 7
-    Emojidex = 8
-    Messenger = 9
-    Mozilla = 10
-    Lg = 11
-    Htc = 12
-    Twemoji = 13
+class EmojiSource:
+    @staticmethod
+    def Twitter() -> EmojiSource:
+        """Create an emoji source from Twitter.
+
+        Returns:
+            EmojiSource: The emoji source.
+        """
+    @staticmethod
+    def Apple() -> EmojiSource:
+        """Create an emoji source from Apple.
+
+        Returns:
+            EmojiSource: The emoji source.
+        """
+    @staticmethod
+    def Google() -> EmojiSource:
+        """Create an emoji source from Google.
+
+        Returns:
+            EmojiSource: The emoji source.
+        """
+    @staticmethod
+    def Microsoft() -> EmojiSource:
+        """Create an emoji source from Microsoft.
+
+        Returns:
+            EmojiSource: The emoji source.
+        """
+    @staticmethod
+    def Samsung() -> EmojiSource:
+        """Create an emoji source from Samsung.
+
+        Returns:
+            EmojiSource: The emoji source.
+        """
+    @staticmethod
+    def Whatsapp() -> EmojiSource:
+        """Create an emoji source from Whatsapp.
+
+        Returns:
+            EmojiSource: The emoji source.
+        """
+    @staticmethod
+    def JoyPixels() -> EmojiSource:
+        """Create an emoji source from JoyPixels.
+
+        Returns:
+            EmojiSource: The emoji source.
+        """
+    @staticmethod
+    def OpenMoji() -> EmojiSource:
+        """Create an emoji source from OpenMoji.
+
+        Returns:
+            EmojiSource: The emoji source.
+        """
+    @staticmethod
+    def Emojidex() -> EmojiSource:
+        """Create an emoji source from Emojidex.
+
+        Returns:
+            EmojiSource: The emoji source.
+        """
+    @staticmethod
+    def Messenger() -> EmojiSource:
+        """Create an emoji source from Messenger.
+
+        Returns:
+            EmojiSource: The emoji source.
+        """
+    @staticmethod
+    def Mozilla() -> EmojiSource:
+        """Create an emoji source from Mozilla.
+
+        Returns:
+            EmojiSource: The emoji source.
+        """
+    @staticmethod
+    def Lg() -> EmojiSource:
+        """Create an emoji source from LG.
+
+        Returns:
+            EmojiSource: The emoji source.
+        """
+    @staticmethod
+    def Htc() -> EmojiSource:
+        """Create an emoji source from HTC.
+
+        Returns:
+            EmojiSource: The emoji source.
+        """
+    @staticmethod
+    def Twemoji() -> EmojiSource:
+        """Create an emoji source from Twemoji.
+
+        Returns:
+            EmojiSource: The emoji source.
+        """
+    @staticmethod
+    def Dir(path: str) -> EmojiSource:
+        """Create an emoji source from a directory of emoji images.
+
+        emoji images should be named using their unicode codepoints,
+        seperated by '-' and ending with '.png'.
+
+        ex. '1f600.png'
+        ex. '1f600-1f3fb.png'
+
+        excluding \uFE0F.
+
+        Args:
+            path (str): The path to the directory.
+
+        Returns:
+            EmojiSource: The emoji source.
+        """
 
 class TextAlign(Enum):
     Left = 0
@@ -411,4 +513,20 @@ def text_wrap(
 
     Returns:
         list[str]: The wrapped text.
+    """
+
+def prebuild_static_vars() -> None:
+    """Prebuild static variables.
+
+    Imagetext uses a lot of static variables, that are built on the first use.
+
+    This function will build them all at once, so that the first use of them
+    doesn't have to build them.
+
+    This function is not required to be called, but it can be useful to call
+    this function at the start of a program, to avoid a small delay when
+    drawing text for the first time.
+
+    This function can be called multiple times, but it will only build the
+    variables once.
     """

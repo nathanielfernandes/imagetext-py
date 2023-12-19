@@ -4,6 +4,11 @@ use crate::{font::Font, objects::WrapStyle};
 use imagetext::prelude::*;
 
 #[pyfunction]
+pub fn prebuild_static_vars() {
+    imagetext::emoji::parse::build_regex();
+}
+
+#[pyfunction]
 pub fn text_size(
     py: Python,
     text: &str,
@@ -13,9 +18,9 @@ pub fn text_size(
 ) -> (i32, i32) {
     py.allow_threads(|| {
         if draw_emojis.unwrap_or(false) {
-            imagetext::measure::text_size_with_emojis(scale(size), &font.superfont, text)
+            imagetext::measure::text_size_with_emojis(scale(size), &font.0, text)
         } else {
-            imagetext::measure::text_size(scale(size), &font.superfont, text)
+            imagetext::measure::text_size(scale(size), &font.0, text)
         }
     })
 }
@@ -33,14 +38,14 @@ pub fn text_size_multiline(
         if draw_emojis.unwrap_or(false) {
             imagetext::measure::text_size_multiline_with_emojis(
                 &lines,
-                &font.superfont,
+                &font.0,
                 scale(size),
                 line_spacing.unwrap_or(1.0),
             )
         } else {
             imagetext::measure::text_size_multiline(
                 &lines,
-                &font.superfont,
+                &font.0,
                 scale(size),
                 line_spacing.unwrap_or(1.0),
             )
@@ -62,14 +67,14 @@ pub fn text_wrap(
         if draw_emojis.unwrap_or(false) {
             let (text, emojis) = imagetext::emoji::parse::parse_out_emojis(
                 text,
-                font.superfont.emoji_options.parse_shortcodes,
-                font.superfont.emoji_options.parse_discord_emojis,
+                font.0.emoji_options.parse_shortcodes,
+                font.0.emoji_options.parse_discord_emojis,
             );
 
             let mut lines = imagetext::wrap::text_wrap(
                 &text,
                 width,
-                &font.superfont,
+                &font.0,
                 scale(size),
                 wrap_style.unwrap_or(WrapStyle::Word).to_wrap_style(),
                 text_width_with_emojis,
@@ -83,13 +88,7 @@ pub fn text_wrap(
                     if let Some(emoji) = emojis_iter.next() {
                         let rep = match emoji {
                             EmojiType::Discord(id) => format!("<:ee:{}>", id),
-                            EmojiType::Regular(e) => {
-                                if let Some(code) = e.shortcode() {
-                                    format!(":{}:", code)
-                                } else {
-                                    e.as_str().to_string()
-                                }
-                            }
+                            EmojiType::Regular(e) => e.to_string(),
                         };
                         *line = line.replacen("😀", &rep, 1);
                     }
@@ -101,7 +100,7 @@ pub fn text_wrap(
             imagetext::wrap::text_wrap(
                 text,
                 width,
-                &font.superfont,
+                &font.0,
                 scale(size),
                 wrap_style.unwrap_or(WrapStyle::Word).to_wrap_style(),
                 imagetext::measure::text_width,

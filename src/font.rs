@@ -4,9 +4,7 @@ use pyo3::prelude::*;
 use crate::objects::EmojiOptions;
 
 #[pyclass]
-pub struct Font {
-    pub superfont: SuperFont<'static>,
-}
+pub struct Font(pub SuperFont<'static>);
 
 #[pymethods]
 impl Font {
@@ -36,17 +34,15 @@ impl Font {
             Vec::new()
         };
 
-        Ok(Font {
-            superfont: SuperFont::with_emoji_options(
-                font,
-                fallbacks,
-                emoji_options.unwrap_or_default().to_emoji_options(),
-            ),
-        })
+        Ok(Font(SuperFont::with_emoji_options(
+            font,
+            fallbacks,
+            emoji_options.unwrap_or_default().to_emoji_options(),
+        )))
     }
 
     pub fn set_emoji_options(&mut self, emoji_options: EmojiOptions) {
-        self.superfont.emoji_options = emoji_options.to_emoji_options();
+        self.0.emoji_options = emoji_options.to_emoji_options();
     }
 }
 
@@ -81,7 +77,7 @@ impl FontDB {
                 query
             ))
         })?;
-        Ok(Font { superfont: font })
+        Ok(Font(font))
     }
 
     #[staticmethod]
@@ -92,9 +88,7 @@ impl FontDB {
                 name
             ))
         })?;
-        Ok(Font {
-            superfont: SuperFont::new(font, vec![]),
-        })
+        Ok(Font(SuperFont::new(font, vec![])))
     }
 
     #[staticmethod]
@@ -107,7 +101,7 @@ impl FontDB {
                         query
                     ))
                 })?;
-        Ok(Font { superfont: font })
+        Ok(Font(font))
     }
 
     #[staticmethod]

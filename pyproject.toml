@@ -1,17 +1,21 @@
 [build-system]
-requires = ["maturin>=0.14,<0.15"]
+requires = ["maturin>=1.0,<2.0"]
 build-backend = "maturin"
+
+[tool.maturin]
+features = ["pyo3/extension-module"]
+
 
 [project]
 name = "imagetext_py"
 description = "Python bindings for imagetext"
-version = "2.1.4"
+version = "2.2.0"
 authors = [
     { name = "Nathaniel Fernandes", email = "nathaniel.s.fernandes@gmail.com" },
 ]
 readme = "readme.md"
 license = { file = "LICENSE" }
-requires-python = ">=3.9"
+requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",

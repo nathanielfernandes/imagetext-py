@@ -20,49 +20,90 @@ impl TextAlign {
     }
 }
 
+#[derive(Clone)]
 #[pyclass]
-#[derive(Clone, Copy)]
-pub enum EmojiSource {
-    Twitter,
-    Apple,
-    Google,
-    Microsoft,
-    Samsung,
-    WhatsApp,
-    // Facebook, NOT WORKING
-    JoyPixels,
-    OpenMoji,
-    Emojidex,
-    Messenger,
-    Mozilla,
-    Lg,
-    Htc,
+pub struct EmojiSource(pub imagetext::emoji::source::EmojiSource);
 
-    Twemoji,
-}
-
+#[allow(non_snake_case)]
+#[pymethods]
 impl EmojiSource {
-    pub fn to_emoji_source(&self) -> imagetext::emoji::source::EmojiSource {
-        match self {
-            EmojiSource::Twitter => imagetext::emoji::source::EmojiSource::Twitter,
-            EmojiSource::Apple => imagetext::emoji::source::EmojiSource::Apple,
-            EmojiSource::Google => imagetext::emoji::source::EmojiSource::Google,
-            EmojiSource::Microsoft => imagetext::emoji::source::EmojiSource::Microsoft,
-            EmojiSource::Samsung => imagetext::emoji::source::EmojiSource::Samsung,
-            EmojiSource::WhatsApp => imagetext::emoji::source::EmojiSource::WhatsApp,
-            EmojiSource::JoyPixels => imagetext::emoji::source::EmojiSource::JoyPixels,
-            EmojiSource::OpenMoji => imagetext::emoji::source::EmojiSource::OpenMoji,
-            EmojiSource::Emojidex => imagetext::emoji::source::EmojiSource::Emojidex,
-            EmojiSource::Messenger => imagetext::emoji::source::EmojiSource::Messenger,
-            EmojiSource::Mozilla => imagetext::emoji::source::EmojiSource::Mozilla,
-            EmojiSource::Lg => imagetext::emoji::source::EmojiSource::Lg,
-            EmojiSource::Htc => imagetext::emoji::source::EmojiSource::Htc,
-            EmojiSource::Twemoji => imagetext::emoji::source::EmojiSource::Twemoji,
-        }
+    #[staticmethod]
+    pub fn Twitter() -> Self {
+        Self(imagetext::emoji::source::EmojiSource::Twitter)
+    }
+
+    #[staticmethod]
+    pub fn Apple() -> Self {
+        Self(imagetext::emoji::source::EmojiSource::Apple)
+    }
+
+    #[staticmethod]
+    pub fn Google() -> Self {
+        Self(imagetext::emoji::source::EmojiSource::Google)
+    }
+
+    #[staticmethod]
+    pub fn Microsoft() -> Self {
+        Self(imagetext::emoji::source::EmojiSource::Microsoft)
+    }
+
+    #[staticmethod]
+    pub fn Samsung() -> Self {
+        Self(imagetext::emoji::source::EmojiSource::Samsung)
+    }
+
+    #[staticmethod]
+    pub fn WhatsApp() -> Self {
+        Self(imagetext::emoji::source::EmojiSource::WhatsApp)
+    }
+
+    #[staticmethod]
+    pub fn JoyPixels() -> Self {
+        Self(imagetext::emoji::source::EmojiSource::JoyPixels)
+    }
+
+    #[staticmethod]
+    pub fn OpenMoji() -> Self {
+        Self(imagetext::emoji::source::EmojiSource::OpenMoji)
+    }
+
+    #[staticmethod]
+    pub fn Emojidex() -> Self {
+        Self(imagetext::emoji::source::EmojiSource::Emojidex)
+    }
+
+    #[staticmethod]
+    pub fn Messenger() -> Self {
+        Self(imagetext::emoji::source::EmojiSource::Messenger)
+    }
+
+    #[staticmethod]
+    pub fn Mozilla() -> Self {
+        Self(imagetext::emoji::source::EmojiSource::Mozilla)
+    }
+
+    #[staticmethod]
+    pub fn Lg() -> Self {
+        Self(imagetext::emoji::source::EmojiSource::Lg)
+    }
+
+    #[staticmethod]
+    pub fn Htc() -> Self {
+        Self(imagetext::emoji::source::EmojiSource::Htc)
+    }
+
+    #[staticmethod]
+    pub fn Twemoji() -> Self {
+        Self(imagetext::emoji::source::EmojiSource::Twemoji)
+    }
+
+    #[staticmethod]
+    pub fn Dir(path: String) {
+        imagetext::emoji::source::EmojiSource::Dir(path);
     }
 }
 
-#[derive(FromPyObject, Clone, Copy)]
+#[derive(FromPyObject, Clone)]
 pub struct EmojiOptions {
     pub scale: f32,
     pub shift: (i64, i64),
@@ -80,7 +121,7 @@ impl EmojiOptions {
 
             parse_shortcodes: self.parse_shortcodes,
             parse_discord_emojis: self.parse_discord_emojis,
-            source: self.source.to_emoji_source(),
+            source: self.source.0.clone(),
         }
     }
 }
@@ -93,7 +134,7 @@ impl Default for EmojiOptions {
 
             parse_shortcodes: true,
             parse_discord_emojis: false,
-            source: EmojiSource::Twitter,
+            source: EmojiSource(imagetext::emoji::source::EmojiSource::Twitter),
         }
     }
 }

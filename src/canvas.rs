@@ -1,30 +1,25 @@
-use std::sync::{Arc, RwLock};
-
 use pyo3::{prelude::*, types::PyBytes};
+use std::sync::{Arc, RwLock};
 
 use crate::objects::Color;
 
 #[derive(Clone)]
 #[pyclass]
-pub struct Canvas {
-    pub im: Arc<RwLock<image::RgbaImage>>,
-}
+pub struct Canvas(pub Arc<RwLock<image::RgbaImage>>);
 
 #[pymethods]
 impl Canvas {
     #[new]
     fn new(width: u32, height: u32, color: Color) -> Self {
-        Canvas {
-            im: Arc::new(RwLock::new(image::RgbaImage::from_pixel(
-                width,
-                height,
-                image::Rgba(color.0),
-            ))),
-        }
+        Canvas(Arc::new(RwLock::new(image::RgbaImage::from_pixel(
+            width,
+            height,
+            image::Rgba(color.0),
+        ))))
     }
 
     fn save(&self, path: &str) -> PyResult<()> {
-        match self.im.read() {
+        match self.0.read() {
             Ok(im) => im.save(path).map_err(|e| {
                 PyErr::new::<pyo3::exceptions::PyIOError, _>(format!("Failed to save image: {}", e))
             }),
@@ -35,7 +30,7 @@ impl Canvas {
     }
 
     fn to_bytes(&self) -> PyResult<((u32, u32), PyObject)> {
-        match self.im.read() {
+        match self.0.read() {
             Ok(im) => {
                 let (width, height) = im.dimensions();
                 Python::with_gil(|py| Ok(((width, height), PyBytes::new(py, &im).into())))
@@ -46,8 +41,8 @@ impl Canvas {
         }
     }
 
-    fn to_buffer(&self) -> PyResult<Vec<u8>> {
-        match self.im.read() {
+    fn as_list(&self) -> PyResult<Vec<u8>> {
+        match self.0.read() {
             Ok(im) => Ok(im.to_vec()),
             Err(_) => Err(PyErr::new::<pyo3::exceptions::PyValueError, _>(
                 "Failed to lock image",
@@ -65,16 +60,14 @@ impl Canvas {
         }
         let buffer: Vec<u8> = image.call_method0("tobytes")?.extract()?;
 
-        Ok(Canvas {
-            im: Arc::new(RwLock::new(
-                image::RgbaImage::from_raw(width, height, buffer).ok_or(PyErr::new::<
-                    pyo3::exceptions::PyValueError,
-                    _,
-                >(
-                    "Failed to convert image",
-                ))?,
-            )),
-        })
+        Ok(Canvas(Arc::new(RwLock::new(
+            image::RgbaImage::from_raw(width, height, buffer).ok_or(PyErr::new::<
+                pyo3::exceptions::PyValueError,
+                _,
+            >(
+                "Failed to convert image"
+            ))?,
+        ))))
     }
 
     fn to_image(&self) -> PyResult<PyObject> {

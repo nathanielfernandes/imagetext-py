@@ -34,18 +34,24 @@ pub fn draw_text(
         stroke_color: Option<&Paint>,
         draw_emojis: Option<bool>,
     ) -> PyResult<()> {
+        let stroke = stroke.map(imagetext::drawing::utils::stroke);
+        let outline = match &stroke {
+            Some(stroke) => Outline::Solid {
+                stroke,
+                fill: stroke_color.map(|c| &c.0).unwrap_or(&BLACK),
+            },
+            None => Outline::None,
+        };
+
         if draw_emojis.unwrap_or(false) {
             imagetext::drawing::text::draw_text_mut_with_emojis(
                 im,
                 &fill.0,
-                stroke
-                    .map(|s| imagetext::drawing::utils::stroke(s))
-                    .as_ref(),
-                stroke_color.map(|c| &c.0),
+                outline,
                 x,
                 y,
                 scale(size),
-                &font.superfont,
+                &font.0,
                 DefaultEmojiResolver::<true>,
                 text,
             )
@@ -59,14 +65,11 @@ pub fn draw_text(
             imagetext::drawing::text::draw_text_mut(
                 im,
                 &fill.0,
-                stroke
-                    .map(|s| imagetext::drawing::utils::stroke(s))
-                    .as_ref(),
-                stroke_color.map(|c| &c.0),
+                outline,
                 x,
                 y,
                 scale(size),
-                &font.superfont,
+                &font.0,
                 text,
             )
             .map_err(|e| {
@@ -78,7 +81,7 @@ pub fn draw_text(
         }
     }
 
-    py.allow_threads(|| match canvas.im.write() {
+    py.allow_threads(|| match canvas.0.write() {
         Ok(mut im) => draw_text_inner(
             &mut im,
             text,
@@ -128,20 +131,26 @@ pub fn draw_text_anchored(
         stroke_color: Option<&Paint>,
         draw_emojis: Option<bool>,
     ) -> PyResult<()> {
+        let stroke = stroke.map(imagetext::drawing::utils::stroke);
+        let outline = match &stroke {
+            Some(stroke) => Outline::Solid {
+                stroke,
+                fill: stroke_color.map(|c| &c.0).unwrap_or(&BLACK),
+            },
+            None => Outline::None,
+        };
+
         if draw_emojis.unwrap_or(false) {
             imagetext::drawing::text::draw_text_anchored_with_emojis(
                 im,
                 &fill.0,
-                stroke
-                    .map(|s| imagetext::drawing::utils::stroke(s))
-                    .as_ref(),
-                stroke_color.map(|c| &c.0),
+                outline,
                 x,
                 y,
                 ax,
                 ay,
                 scale(size),
-                &font.superfont,
+                &font.0,
                 DefaultEmojiResolver::<true>,
                 text,
             )
@@ -155,16 +164,13 @@ pub fn draw_text_anchored(
             imagetext::drawing::text::draw_text_anchored(
                 im,
                 &fill.0,
-                stroke
-                    .map(|s| imagetext::drawing::utils::stroke(s))
-                    .as_ref(),
-                stroke_color.map(|c| &c.0),
+                outline,
                 x,
                 y,
                 ax,
                 ay,
                 scale(size),
-                &font.superfont,
+                &font.0,
                 text,
             )
             .map_err(|e| {
@@ -176,7 +182,7 @@ pub fn draw_text_anchored(
         }
     }
 
-    py.allow_threads(|| match canvas.im.write() {
+    py.allow_threads(|| match canvas.0.write() {
         Ok(mut im) => draw_text_anchored_inner(
             &mut im,
             text,
@@ -234,21 +240,27 @@ pub fn draw_text_multiline(
         stroke_color: Option<&Paint>,
         draw_emojis: Option<bool>,
     ) -> PyResult<()> {
+        let stroke = stroke.map(imagetext::drawing::utils::stroke);
+        let outline = match &stroke {
+            Some(stroke) => Outline::Solid {
+                stroke,
+                fill: stroke_color.map(|c| &c.0).unwrap_or(&BLACK),
+            },
+            None => Outline::None,
+        };
+
         if draw_emojis.unwrap_or(false) {
             imagetext::drawing::text::draw_text_multiline_with_emojis(
                 im,
                 &fill.0,
-                stroke
-                    .map(|s| imagetext::drawing::utils::stroke(s))
-                    .as_ref(),
-                stroke_color.map(|c| &c.0),
+                outline,
                 x,
                 y,
                 ax,
                 ay,
                 width,
                 scale(size),
-                &font.superfont,
+                &font.0,
                 DefaultEmojiResolver::<true>,
                 &lines,
                 line_spacing.unwrap_or(1.0),
@@ -264,17 +276,14 @@ pub fn draw_text_multiline(
             imagetext::drawing::text::draw_text_multiline(
                 im,
                 &fill.0,
-                stroke
-                    .map(|s| imagetext::drawing::utils::stroke(s))
-                    .as_ref(),
-                stroke_color.map(|c| &c.0),
+                outline,
                 x,
                 y,
                 ax,
                 ay,
                 width,
                 scale(size),
-                &font.superfont,
+                &font.0,
                 &lines,
                 line_spacing.unwrap_or(1.0),
                 align.unwrap_or(&TextAlign::Left).to_align(),
@@ -288,7 +297,7 @@ pub fn draw_text_multiline(
         }
     }
 
-    py.allow_threads(|| match canvas.im.write() {
+    py.allow_threads(|| match canvas.0.write() {
         Ok(mut im) => draw_text_multiline_inner(
             &mut im,
             lines,
@@ -351,21 +360,27 @@ pub fn draw_text_wrapped(
         draw_emojis: Option<bool>,
         wrap_style: Option<&crate::objects::WrapStyle>,
     ) -> PyResult<()> {
+        let stroke = stroke.map(imagetext::drawing::utils::stroke);
+        let outline = match &stroke {
+            Some(stroke) => Outline::Solid {
+                stroke,
+                fill: stroke_color.map(|c| &c.0).unwrap_or(&BLACK),
+            },
+            None => Outline::None,
+        };
+
         if draw_emojis.unwrap_or(false) {
             imagetext::drawing::text::draw_text_wrapped_with_emojis(
                 im,
                 &fill.0,
-                stroke
-                    .map(|s| imagetext::drawing::utils::stroke(s))
-                    .as_ref(),
-                stroke_color.map(|c| &c.0),
+                outline,
                 x,
                 y,
                 ax,
                 ay,
                 width,
                 scale(size),
-                &font.superfont,
+                &font.0,
                 DefaultEmojiResolver::<true>,
                 text,
                 line_spacing.unwrap_or(1.0),
@@ -384,17 +399,14 @@ pub fn draw_text_wrapped(
             imagetext::drawing::text::draw_text_wrapped(
                 im,
                 &fill.0,
-                stroke
-                    .map(|s| imagetext::drawing::utils::stroke(s))
-                    .as_ref(),
-                stroke_color.map(|c| &c.0),
+                outline,
                 x,
                 y,
                 ax,
                 ay,
                 width,
                 scale(size),
-                &font.superfont,
+                &font.0,
                 text,
                 line_spacing.unwrap_or(1.0),
                 align.unwrap_or(&TextAlign::Left).to_align(),
@@ -411,7 +423,7 @@ pub fn draw_text_wrapped(
         }
     }
 
-    py.allow_threads(|| match canvas.im.write() {
+    py.allow_threads(|| match canvas.0.write() {
         Ok(mut im) => draw_text_wrapped_inner(
             &mut im,
             text,
