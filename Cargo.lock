@@ -595,19 +595,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "hyper-tls"
-version = "0.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d6183ddfa99b85da61a140bea0efc93fdf56ceaa041b37d553518030827f9905"
-dependencies = [
- "bytes",
- "hyper",
- "native-tls",
- "tokio",
- "tokio-native-tls",
-]
-
-[[package]]
 name = "idna"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -709,12 +696,6 @@ checksum = "cee9c64da59eae3b50095c18d3e74f8b73c0b86d2792824ff01bbce68ba229ca"
 dependencies = [
  "wasm-bindgen",
 ]
-
-[[package]]
-name = "lazy_static"
-version = "1.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 
 [[package]]
 name = "lebe"
@@ -820,24 +801,6 @@ dependencies = [
  "thiserror",
  "triomphe",
  "uuid",
-]
-
-[[package]]
-name = "native-tls"
-version = "0.2.11"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "07226173c32f2926027b63cce4bcd8076c3552846cbe7925f3aaffeac0a3b92e"
-dependencies = [
- "lazy_static",
- "libc",
- "log",
- "openssl",
- "openssl-probe",
- "openssl-sys",
- "schannel",
- "security-framework",
- "security-framework-sys",
- "tempfile",
 ]
 
 [[package]]
@@ -1234,12 +1197,10 @@ dependencies = [
  "http-body",
  "hyper",
  "hyper-rustls",
- "hyper-tls",
  "ipnet",
  "js-sys",
  "log",
  "mime",
- "native-tls",
  "once_cell",
  "percent-encoding",
  "pin-project-lite",
@@ -1251,7 +1212,6 @@ dependencies = [
  "serde_urlencoded",
  "system-configuration",
  "tokio",
- "tokio-native-tls",
  "tokio-rustls",
  "tower-service",
  "url",
@@ -1681,16 +1641,6 @@ dependencies = [
  "pin-project-lite",
  "socket2",
  "windows-sys 0.48.0",
-]
-
-[[package]]
-name = "tokio-native-tls"
-version = "0.3.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bbae76ab933c85776efabc971569dd6119c580d8f5d448769dec1764bf796ef2"
-dependencies = [
- "native-tls",
- "tokio",
 ]
 
 [[package]]
