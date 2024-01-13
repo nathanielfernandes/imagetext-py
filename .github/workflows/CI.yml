@@ -11,26 +11,39 @@ on:
 jobs:
   linux:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - x86
+          - x86_64
+          - aarch64
+          - armv7
+          - ppc64le
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: recursive
 
-      - name: Install Perl
-        run: sudo apt-get install perl
-
-      - name: Install Make
-        run: sudo apt-get install make
-
-      - name: openssl
-        run: sudo apt-get install librust-openssl-dev libssl-dev pkg-config
-
       - name: Maturin Build
         uses: PyO3/maturin-action@v1
         with:
+          target: ${{ matrix.target }}
           manylinux: auto
-          command: build
-          args: --release -o dist --find-interpreter
+          args: --release --out dist
+          before-script-linux: |
+            # If we're running on rhel centos, install needed packages.
+            if command -v yum &> /dev/null; then
+                yum update -y && yum install -y perl-core openssl openssl-devel pkgconfig libatomic
+
+                # If we're running on i686 we need to symlink libatomic
+                # in order to build openssl with -latomic flag.
+                if [[ ! -d "/usr/lib64" ]]; then
+                    ln -s /usr/lib/libatomic.so.1 /usr/lib/libatomic.so
+                fi
+            else
+                # If we're running on debian-based system.
+                apt update -y && apt-get install -y libssl-dev openssl pkg-config
+            fi
 
       - name: Upload wheels
         uses: actions/upload-artifact@v3
