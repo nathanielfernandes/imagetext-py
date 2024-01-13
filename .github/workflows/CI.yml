@@ -8,9 +8,6 @@ on:
   pull_request:
   workflow_dispatch:
 
-# for linux
-# sudo apt install pkg-config
-
 jobs:
   linux:
     runs-on: ubuntu-latest
@@ -26,7 +23,7 @@ jobs:
         run: sudo apt-get install make
 
       - name: openssl
-        run: sudo apt-get install librust-openssl-dev
+        run: sudo apt-get install librust-openssl-dev libssl-dev pkg-config
 
       - name: Maturin Build
         uses: PyO3/maturin-action@v1
