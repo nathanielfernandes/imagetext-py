@@ -1,4 +1,3 @@
-use imagetext::emoji::default_resolver::DefaultEmojiResolver;
 use pyo3::prelude::*;
 
 use crate::canvas;
