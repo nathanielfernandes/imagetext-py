@@ -25,6 +25,9 @@ jobs:
       - name: Install Make
         run: sudo apt-get install make
 
+      - name: openssl
+        run: sudo apt-get install librust-openssl-dev
+
       - name: Maturin Build
         uses: PyO3/maturin-action@v1
         with:
