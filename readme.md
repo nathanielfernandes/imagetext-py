@@ -5,31 +5,33 @@
   ### A blazing fast text drawing library
   ###### imagetext-py is python bindings for [imagetext](https://github.com/nathanielfernandes/imagetext)
 
+<!-- [![CI](https://github.com/nathanielfernandes/imagetext-py/actions/workflows/CI.yml/badge.svg?event=push)](https://github.com/nathanielfernandes/imagetext-py/actions/workflows/CI.yml) -->
 
-[![CI](https://github.com/nathanielfernandes/imagetext-py/actions/workflows/CI.yml/badge.svg?event=push)](https://github.com/nathanielfernandes/imagetext-py/actions/workflows/CI.yml)
 [![pypi](https://img.shields.io/pypi/v/imagetext-py)](https://pypi.org/project/imagetext-py/)
 [![Downloads](https://static.pepy.tech/personalized-badge/imagetext-py?period=total&units=international_system&left_color=grey&right_color=blue&left_text=Downloads)](https://pepy.tech/project/imagetext-py)
-![PythonVersions](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11-blue) 
+![PythonVersions](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)
 [![discord](https://img.shields.io/discord/1067663746786414632?label=discord)](https://discord.gg/e4T2qycHJz)
 
-  ---
-  
+---
+
 </div>
 
 > if you found this library useful, consider leaving a star ⭐
 
-## About 
+## About
+
 imagetext makes use of [rusttype](https://github.com/redox-os/rusttype) for font parsing and [tiny-skia](https://github.com/RazrFalcon/tiny-skia) for drawing. It has a simple API that allows you to draw text with ease.
 
 Currently imagetext-py does beat out Pillow for most of the cases I've tested, but I will setup some benchmarks soon.
 
 ## Features
+
 - Multi-line text
 - Text wrapping
 - Text alignment
 - Font fallbacks
-- Text stroke 
-- Gradient fills 
+- Text stroke
+- Gradient fills
 - Emojis! (almost every platform supported, including discord)
 - Global Font Database with css-like font querying
 
@@ -62,12 +64,12 @@ rainbow = Paint.Rainbow((0.0,0.0), (256.0,256.0))
 text = "hello my 😓 n🐢ame i☕s 会のすべ aての構成員 nathan and i drink soup boop coop, the quick brown fox jumps over the lazy dog"
 
 draw_text_wrapped(canvas=cv,              # the canvas to draw on
-                  text=text, 
+                  text=text,
                   x=256, y=256,           # the position of the text
                   ax=0.5, ay=0.5,         # the anchor of the text
                   size=67,                # the size of the text
                   width=500,              # the width of the text
-                  font=font,              
+                  font=font,
                   fill=black,
                   align=TextAlign.Center,
                   stroke=2.0,             # the stroke width (optional)
@@ -84,12 +86,13 @@ dimensions, bytes = cv.to_bytes()
 # you can also save directly to a file
 cv.save("test.png")
 ```
+
 produces this image:
 
 ![test.png](https://cdn.discordapp.com/attachments/741384050387714162/1073465855901446151/image.png)
 
+## Pillow and FontDB Usage
 
-## Pillow and FontDB Usage 
 ```python
 from PIL import Image
 from imagetext_py import *
