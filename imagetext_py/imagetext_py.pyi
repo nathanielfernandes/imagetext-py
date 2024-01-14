@@ -1,13 +1,15 @@
-from typing import TYPE_CHECKING, Optional
-from imagetext_py.lib import Color, EmojiOptions
+from __future__ import __annotations__
 
 from enum import Enum
+from typing import TYPE_CHECKING, Optional
+
+from imagetext_py.lib import Color, EmojiOptions
 
 if TYPE_CHECKING:
     from PIL import Image
 
 class Canvas:
-    def __new__(self, width: int, height: int, color: Color) -> Canvas:
+    def __new__(cls, width: int, height: int, color: Color) -> Canvas:
         """Create a new canvas.
 
         Args:
@@ -30,7 +32,7 @@ class Canvas:
         Returns:
             tuple[tuple[int, int], bytes]: The canvas dimensions and bytes.
         """
-    def to_image(self) -> "Image.Image":
+    def to_image(self) -> Image.Image:
         """Get the canvas as a PIL image.
 
         Returns:
@@ -43,7 +45,7 @@ class Canvas:
             list[int]: The canvas as a buffer.
         """
     @staticmethod
-    def from_image(image: "Image.Image") -> Canvas:
+    def from_image(image: Image.Image) -> Canvas:
         """Create a canvas from an image.
 
         Args:
@@ -116,7 +118,10 @@ class Paint:
 
 class Font:
     def __new__(
-        self, path: str, fallbacks: list[str] = None, emoji_options: EmojiOptions = None
+        cls,
+        path: str,
+        fallbacks: Optional[list[str]] = None,
+        emoji_options: Optional[EmojiOptions] = None,
     ) -> Font:
         """Create a new font.
 
