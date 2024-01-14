@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING, Optional
+
 from imagetext_py.imagetext_py import *
 
-try:
+if TYPE_CHECKING:
     from PIL import Image
-except:
-    pass
 
 
 class Color(tuple):
@@ -82,7 +82,7 @@ class EmojiOptions:
 
 
 class Writer:
-    def __init__(self, image: "Image.Image") -> None:
+    def __init__(self, image: Image.Image) -> None:
         """Create a new draw object.
 
         Args:
@@ -115,8 +115,8 @@ class Writer:
         size: float,
         font: Font,
         fill: Paint,
-        stroke: Paint = None,
-        stroke_color: Paint = None,
+        stroke: Optional[float] = None,
+        stroke_color: Optional[Paint] = None,
         draw_emojis: bool = False,
     ) -> None:
         """Draw text on the image.
@@ -128,7 +128,7 @@ class Writer:
             size (float): The size of the text.
             font (Font): The font to use.
             fill (Paint): The fill paint.
-            stroke (Paint, optional): The stroke paint. Defaults to None.
+            stroke (float, optional): The stroke of the text. Defaults to None.
             stroke_color (Paint, optional): The stroke color. Defaults to None.
             draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
         """
@@ -155,8 +155,8 @@ class Writer:
         size: float,
         font: Font,
         fill: Paint,
-        stroke: Paint = None,
-        stroke_color: Paint = None,
+        stroke: Optional[float] = None,
+        stroke_color: Optional[Paint] = None,
         draw_emojis: bool = False,
     ) -> None:
         """Draw text on the image.
@@ -170,7 +170,7 @@ class Writer:
             size (float): The size of the text.
             font (Font): The font to use.
             fill (Paint): The fill paint.
-            stroke (Paint, optional): The stroke paint. Defaults to None.
+            stroke (float, optional): The stroke of the text. Defaults to None.
             stroke_color (Paint, optional): The stroke color. Defaults to None.
             draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
         """
@@ -202,8 +202,8 @@ class Writer:
         fill: Paint,
         line_spacing: float = 1.0,
         align: TextAlign = TextAlign.Left,
-        stroke: Paint = None,
-        stroke_color: Paint = None,
+        stroke: Optional[float] = None,
+        stroke_color: Optional[Paint] = None,
         draw_emojis: bool = False,
     ) -> None:
         """Draw text on the image.
@@ -220,7 +220,7 @@ class Writer:
             fill (Paint): The fill paint.
             line_spacing (float, optional): The line spacing. Defaults to 1.0.
             align (TextAlign, optional): The text alignment. Defaults to TextAlign.Left.
-            stroke (Paint, optional): The stroke paint. Defaults to None.
+            stroke (float, optional): The stroke of the text. Defaults to None.
             stroke_color (Paint, optional): The stroke color. Defaults to None.
             draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
         """
@@ -255,8 +255,8 @@ class Writer:
         fill: Paint,
         line_spacing: float = 1.0,
         align: TextAlign = TextAlign.Left,
-        stroke: Paint = None,
-        stroke_color: Paint = None,
+        stroke: Optional[float] = None,
+        stroke_color: Optional[Paint] = None,
         draw_emojis: bool = False,
         wrap_style: WrapStyle = WrapStyle.Word,
     ) -> None:
@@ -274,7 +274,7 @@ class Writer:
             fill (Paint): The fill paint.
             line_spacing (float, optional): The line spacing. Defaults to 1.0.
             align (TextAlign, optional): The text alignment. Defaults to TextAlign.Left.
-            stroke (Paint, optional): The stroke paint. Defaults to None.
+            stroke (float, optional): The stroke of the text. Defaults to None.
             stroke_color (Paint, optional): The stroke color. Defaults to None.
             draw_emojis (bool, optional): Whether to draw emojis. Defaults to False.
             wrap_style (WrapStyle, optional): The wrap style. Defaults to WrapStyle.Word.
