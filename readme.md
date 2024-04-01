@@ -1,6 +1,6 @@
 <div align="center">
   
-  ![hero banner](https://cdn.discordapp.com/attachments/616149431124885520/1065472311114862612/test.png)
+  ![hero banner](./assets/hero.png)
   
   ### A blazing fast text drawing library
   ###### imagetext-py is python bindings for [imagetext](https://github.com/nathanielfernandes/imagetext)
@@ -89,7 +89,7 @@ cv.save("test.png")
 
 produces this image:
 
-![test.png](https://cdn.discordapp.com/attachments/741384050387714162/1073465855901446151/image.png)
+![test.png](./assets/ex1.png)
 
 ## Pillow and FontDB Usage
 
@@ -124,4 +124,4 @@ with Image.new("RGBA", (512, 512), "white") as im:
 
 produces this image:
 
-![test.png](https://cdn.discordapp.com/attachments/741384050387714162/1073464353543696495/image.png)
+![test.png](./assets/ex2.png)
