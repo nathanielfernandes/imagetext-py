@@ -10,6 +10,7 @@ pub struct Paint(pub imagetext::prelude::Paint<'static>);
 #[pymethods]
 impl Paint {
     #[new]
+    #[pyo3(signature = (color=None, anti_alias=None))]
     fn new(color: Option<Color>, anti_alias: Option<bool>) -> Self {
         let mut paint = imagetext::prelude::Paint::default();
 

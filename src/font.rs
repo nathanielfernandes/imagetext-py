@@ -9,6 +9,7 @@ pub struct Font(pub SuperFont<'static>);
 #[pymethods]
 impl Font {
     #[new]
+    #[pyo3(signature = (path, fallbacks=None, emoji_options=None))]
     fn new(
         path: &str,
         fallbacks: Option<Vec<String>>,
