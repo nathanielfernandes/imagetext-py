@@ -8,6 +8,7 @@ use crate::paint::Paint;
 use imagetext::prelude::*;
 
 #[pyfunction]
+#[pyo3(signature = (canvas, text, x, y, size, font, fill, stroke=None, stroke_color=None, draw_emojis=None))]
 pub fn draw_text(
     py: Python,
     canvas: canvas::Canvas,
@@ -80,7 +81,7 @@ pub fn draw_text(
         }
     }
 
-    py.allow_threads(|| match canvas.0.write() {
+    py.detach(|| match canvas.0.write() {
         Ok(mut im) => draw_text_inner(
             &mut im,
             text,
@@ -101,6 +102,7 @@ pub fn draw_text(
 }
 
 #[pyfunction]
+#[pyo3(signature = (canvas, text, x, y, ax, ay, size, font, fill, stroke=None, stroke_color=None, draw_emojis=None))]
 pub fn draw_text_anchored(
     py: Python,
     canvas: &mut canvas::Canvas,
@@ -181,7 +183,7 @@ pub fn draw_text_anchored(
         }
     }
 
-    py.allow_threads(|| match canvas.0.write() {
+    py.detach(|| match canvas.0.write() {
         Ok(mut im) => draw_text_anchored_inner(
             &mut im,
             text,
@@ -204,6 +206,7 @@ pub fn draw_text_anchored(
 }
 
 #[pyfunction]
+#[pyo3(signature = (canvas, lines, x, y, ax, ay, width, size, font, fill, line_spacing=None, align=None, stroke=None, stroke_color=None, draw_emojis=None))]
 pub fn draw_text_multiline(
     py: Python,
     canvas: &mut canvas::Canvas,
@@ -296,7 +299,7 @@ pub fn draw_text_multiline(
         }
     }
 
-    py.allow_threads(|| match canvas.0.write() {
+    py.detach(|| match canvas.0.write() {
         Ok(mut im) => draw_text_multiline_inner(
             &mut im,
             lines,
@@ -322,6 +325,7 @@ pub fn draw_text_multiline(
 }
 
 #[pyfunction]
+#[pyo3(signature = (canvas, text, x, y, ax, ay, width, size, font, fill, line_spacing=None, align=None, stroke=None, stroke_color=None, draw_emojis=None, wrap_style=None))]
 pub fn draw_text_wrapped(
     py: Python,
     canvas: &mut canvas::Canvas,
@@ -422,7 +426,7 @@ pub fn draw_text_wrapped(
         }
     }
 
-    py.allow_threads(|| match canvas.0.write() {
+    py.detach(|| match canvas.0.write() {
         Ok(mut im) => draw_text_wrapped_inner(
             &mut im,
             text,

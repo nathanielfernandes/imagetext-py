@@ -23,11 +23,11 @@ jobs:
       - name: "Build wheels - windows"
         uses: PyO3/maturin-action@v1
         with:
-          args: --release -o dist --find-interpreter --target ${{ matrix.platform.target }}
+          args: --release -o dist --target ${{ matrix.platform.target }}
       - name: Upload wheels
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: wheels
+          name: wheels-${{ github.job }}-${{ strategy.job-index }}
           path: dist
 
   macos-x86_64:
@@ -42,11 +42,11 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           target: x86_64
-          args: --release -o dist --find-interpreter
+          args: --release -o dist
       - name: Upload wheels
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: wheels
+          name: wheels-${{ github.job }}-${{ strategy.job-index }}
           path: dist
 
   macos-universal:
@@ -60,11 +60,11 @@ jobs:
       - name: "Build wheels - universal"
         uses: PyO3/maturin-action@v1
         with:
-          args: --release -o dist --find-interpreter --target universal2-apple-darwin
+          args: --release -o dist --target universal2-apple-darwin
       - name: Upload wheels
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: wheels
+          name: wheels-${{ github.job }}-${{ strategy.job-index }}
           path: dist
 
   linux:
@@ -85,7 +85,7 @@ jobs:
           target: ${{ matrix.target }}
           manylinux: auto
           command: build
-          args: --release -o dist --find-interpreter
+          args: --release -o dist
           before-script-linux: |
             # If we're running on rhel centos, install needed packages.
             if command -v yum &> /dev/null; then
@@ -101,9 +101,9 @@ jobs:
                 apt update -y && apt-get install -y libssl-dev openssl pkg-config
             fi
       - name: Upload wheels
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: wheels
+          name: wheels-${{ github.job }}-${{ strategy.job-index }}
           path: dist
 
   linux-cross:
@@ -133,11 +133,11 @@ jobs:
           target: ${{ matrix.platform.target }}
           manylinux: auto
           docker-options: ${{ matrix.platform.maturin_docker_options }}
-          args: --release -o dist --find-interpreter
+          args: --release -o dist
       - name: Upload wheels
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: wheels
+          name: wheels-${{ github.job }}-${{ strategy.job-index }}
           path: dist
 
   musllinux:
@@ -157,11 +157,11 @@ jobs:
         with:
           target: ${{ matrix.target }}
           manylinux: musllinux_1_2
-          args: --release -o dist --find-interpreter
+          args: --release -o dist
       - name: Upload wheels
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: wheels
+          name: wheels-${{ github.job }}-${{ strategy.job-index }}
           path: dist
 
   musllinux-cross:
@@ -184,12 +184,12 @@ jobs:
         with:
           target: ${{ matrix.platform.target }}
           manylinux: musllinux_1_2
-          args: --release -o dist --find-interpreter
+          args: --release -o dist
           docker-options: ${{ matrix.platform.maturin_docker_options }}
       - name: Upload wheels
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: wheels
+          name: wheels-${{ github.job }}-${{ strategy.job-index }}
           path: dist
 
   release:
@@ -204,13 +204,15 @@ jobs:
       - musllinux-cross
       - windows
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
-          name: wheels
+          pattern: wheels-*
+          merge-multiple: true
+          path: dist
       - name: Publish to PyPI
         uses: PyO3/maturin-action@v1
         env:
           MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
         with:
           command: upload
-          args: --skip-existing *
+          args: --skip-existing dist/*

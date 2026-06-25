@@ -4,7 +4,7 @@ use std::sync::{Arc, RwLock};
 use crate::objects::Color;
 
 #[derive(Clone)]
-#[pyclass]
+#[pyclass(from_py_object)]
 pub struct Canvas(pub Arc<RwLock<image::RgbaImage>>);
 
 #[pymethods]
@@ -29,11 +29,13 @@ impl Canvas {
         }
     }
 
-    fn to_bytes(&self) -> PyResult<((u32, u32), PyObject)> {
+    fn to_bytes(&self) -> PyResult<((u32, u32), Py<PyAny>)> {
         match self.0.read() {
             Ok(im) => {
                 let (width, height) = im.dimensions();
-                Python::with_gil(|py| Ok(((width, height), PyBytes::new(py, &im).into())))
+                Python::attach(|py| {
+                    Ok(((width, height), PyBytes::new(py, &im).into_any().unbind()))
+                })
             }
             Err(_) => Err(PyErr::new::<pyo3::exceptions::PyValueError, _>(
                 "Failed to lock image",
@@ -51,14 +53,18 @@ impl Canvas {
     }
 
     #[staticmethod]
-    fn from_image(mut image: &PyAny) -> PyResult<Self> {
-        let mode: &str = image.getattr("mode")?.extract()?;
+    fn from_image(image: &Bound<'_, PyAny>) -> PyResult<Self> {
+        let mode: String = image.getattr("mode")?.extract()?;
         let width: u32 = image.getattr("width")?.extract()?;
         let height: u32 = image.getattr("height")?.extract()?;
-        if mode != "RGBA" {
-            image = image.call_method1("convert", ("RGBA",))?;
-        }
-        let buffer: Vec<u8> = image.call_method0("tobytes")?.extract()?;
+        let buffer: Vec<u8> = if mode != "RGBA" {
+            image
+                .call_method1("convert", ("RGBA",))?
+                .call_method0("tobytes")?
+                .extract()?
+        } else {
+            image.call_method0("tobytes")?.extract()?
+        };
 
         Ok(Canvas(Arc::new(RwLock::new(
             image::RgbaImage::from_raw(width, height, buffer).ok_or(PyErr::new::<
@@ -70,11 +76,11 @@ impl Canvas {
         ))))
     }
 
-    fn to_image(&self) -> PyResult<PyObject> {
+    fn to_image(&self) -> PyResult<Py<PyAny>> {
         let ((width, height), data) = self.to_bytes()?;
-        Python::with_gil(|py| {
+        Python::attach(|py| {
             let pil = PyModule::import(py, "PIL")?;
-            let image: PyObject = pil
+            let image: Py<PyAny> = pil
                 .getattr("Image")?
                 .getattr("frombytes")?
                 .call1(("RGBA", (width, height), data))?

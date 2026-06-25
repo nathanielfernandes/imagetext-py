@@ -3,7 +3,8 @@ use pyo3::prelude::*;
 #[derive(FromPyObject)]
 pub struct Color(pub [u8; 4]);
 
-#[pyclass]
+#[derive(PartialEq)]
+#[pyclass(eq, eq_int)]
 pub enum TextAlign {
     Left,
     Center,
@@ -21,7 +22,7 @@ impl TextAlign {
 }
 
 #[derive(Clone)]
-#[pyclass]
+#[pyclass(from_py_object)]
 pub struct EmojiSource(pub imagetext::emoji::source::EmojiSource);
 
 #[allow(non_snake_case)]
@@ -139,8 +140,8 @@ impl Default for EmojiOptions {
     }
 }
 
-#[derive(Clone, Copy)]
-#[pyclass]
+#[derive(Clone, Copy, PartialEq)]
+#[pyclass(eq, eq_int, from_py_object)]
 pub enum WrapStyle {
     Word,
     Character,

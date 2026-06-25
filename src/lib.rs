@@ -9,7 +9,7 @@ use pyo3::prelude::*;
 
 /// A Python module implemented in Rust.
 #[pymodule]
-fn imagetext_py(_py: Python, m: &PyModule) -> PyResult<()> {
+fn imagetext_py(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<canvas::Canvas>()?;
     m.add_class::<font::Font>()?;
     m.add_class::<font::FontDB>()?;

@@ -9,6 +9,7 @@ pub fn prebuild_static_vars() {
 }
 
 #[pyfunction]
+#[pyo3(signature = (text, size, font, draw_emojis=None))]
 pub fn text_size(
     py: Python,
     text: &str,
@@ -16,7 +17,7 @@ pub fn text_size(
     font: &Font,
     draw_emojis: Option<bool>,
 ) -> (i32, i32) {
-    py.allow_threads(|| {
+    py.detach(|| {
         if draw_emojis.unwrap_or(false) {
             imagetext::measure::text_size_with_emojis(scale(size), &font.0, text)
         } else {
@@ -26,6 +27,7 @@ pub fn text_size(
 }
 
 #[pyfunction]
+#[pyo3(signature = (lines, size, font, line_spacing=None, draw_emojis=None))]
 pub fn text_size_multiline(
     py: Python,
     lines: Vec<String>,
@@ -34,7 +36,7 @@ pub fn text_size_multiline(
     line_spacing: Option<f32>,
     draw_emojis: Option<bool>,
 ) -> (i32, i32) {
-    py.allow_threads(|| {
+    py.detach(|| {
         if draw_emojis.unwrap_or(false) {
             imagetext::measure::text_size_multiline_with_emojis(
                 &lines,
@@ -54,6 +56,7 @@ pub fn text_size_multiline(
 }
 
 #[pyfunction]
+#[pyo3(signature = (text, width, size, font, draw_emojis=None, wrap_style=None))]
 pub fn text_wrap(
     py: Python,
     text: &str,
@@ -63,7 +66,7 @@ pub fn text_wrap(
     draw_emojis: Option<bool>,
     wrap_style: Option<WrapStyle>,
 ) -> Vec<String> {
-    py.allow_threads(|| {
+    py.detach(|| {
         if draw_emojis.unwrap_or(false) {
             let (text, emojis) = imagetext::emoji::parse::parse_out_emojis(
                 text,
