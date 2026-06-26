@@ -9,7 +9,7 @@ features = ["pyo3/extension-module"]
 [project]
 name = "imagetext_py"
 description = "Python bindings for imagetext"
-version = "2.2.0"
+version = "2.2.1"
 authors = [
     { name = "Nathaniel Fernandes", email = "nathaniel.s.fernandes@gmail.com" },
 ]
