@@ -191,7 +191,7 @@ class Writer:
 
     def draw_text_multiline(
         self,
-        text: str,
+        lines: list[str],
         x: float,
         y: float,
         ax: float,
@@ -209,7 +209,7 @@ class Writer:
         """Draw text on the image.
 
         Args:
-            text (str): The text to draw.
+            lines (list[str]): The text to draw.
             x (float): The x position of the text.
             y (float): The y position of the text.
             ax (float): The x anchor of the text.
@@ -226,7 +226,7 @@ class Writer:
         """
         draw_text_multiline(
             self._canvas,
-            text,
+            lines,
             x,
             y,
             ax,
